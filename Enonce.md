@@ -158,3 +158,5 @@ Le livrable 3 consiste en l'intégration de l'authentification ainsi que l'ajout
         * boutons à cliquer
         * facilitez la vie des correcteurs!
     * Expliquer vos 2 fonctionalités avancées et comment les voir en action
+
+Bonne chance!
