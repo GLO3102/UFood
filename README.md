@@ -16,14 +16,13 @@ Voir l'énoncé du travail [sur cette page](https://github.com/GLO3102/UFood/blo
 
 ### Grille de correction
 
-**TODO vseguin**
-Consultez la grille de correction [ici](https://docs.google.com/spreadsheets/d/1tAZorseSEgRE_G6VGlfba9N1hrv_egVkyU62bvNgHF8/edit?usp=sharing).
+Consultez la grille de correction [ici](https://docs.google.com/spreadsheets/d/1f8q3h0EkpzgBfxSREqfRtWaZHuL6Vt6w-bjiZ_dUGC4/edit?usp=sharing).
 
 ## Développement
 
 ### Starter pack
 
-Utiliser le [starter pack](https://github.com/GLO3102/vue-starter) pour votre projet.
+**TODO vseguin** Utiliser le [starter pack](https://github.com/GLO3102/vue-starter) pour votre projet.
 
 ### GitHub
 
