@@ -22,7 +22,7 @@ Consultez la grille de correction [ici](https://docs.google.com/spreadsheets/d/1
 
 ### Starter pack
 
-**TODO vseguin** Utiliser le [starter pack](https://github.com/GLO3102/vue-starter) pour votre projet.
+Utiliser le [starter pack](https://github.com/GLO3102/vue-starter) pour votre projet.
 
 ### GitHub
 
