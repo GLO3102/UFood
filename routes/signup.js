@@ -1,6 +1,6 @@
 const passport = require('passport')
 
-exports.showSignupPage = function(req, res) {
+exports.showSignupPage = (req, res) => {
   res.render('signup.ejs', { message: req.flash('signupMessage') })
   req.session.destroy()
 }
@@ -11,7 +11,7 @@ exports.passportSignup = passport.authenticate('local-signup', {
   failureFlash: true
 })
 
-exports.welcome = function(req, res) {
+exports.welcome = (req, res) => {
   if (req.user) {
     res.status(200).send({
       message: 'USER_SIGNED_UP_SUCCESSFULLY',

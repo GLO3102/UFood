@@ -2,7 +2,7 @@ const url = require('url')
 const UserModel = require('../models/user').model
 const jwt = require('jwt-simple')
 
-exports.isAuthenticated = async function(req, res, next) {
+exports.isAuthenticated = async (req, res, next) => {
   const token = exports.retrieveToken(req)
 
   if (token) {
@@ -40,7 +40,7 @@ exports.isAuthenticated = async function(req, res, next) {
   }
 }
 
-exports.retrieveToken = function(req) {
+exports.retrieveToken = req => {
   const parsedUrl = url.parse(req.url, true)
 
   return (

@@ -1,8 +1,8 @@
-exports.getHome = function(req, res) {
-  res.status(200).send('Welcome to UBeat API.')
+exports.getHome = (req, res) => {
+  res.status(200).send('Welcome to UFood! API is up.')
 }
 
-exports.getStatus = function(req, res) {
+exports.getStatus = (req, res) => {
   res.status(200).send({
     status: 'online'
   })

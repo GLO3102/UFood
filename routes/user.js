@@ -1,6 +1,6 @@
 const User = require('../models/user.js').model
 
-exports.allUsers = async function(req, res) {
+exports.allUsers = async (req, res) => {
   try {
     const docs = await User.find({})
     const users = []
@@ -14,7 +14,7 @@ exports.allUsers = async function(req, res) {
   }
 }
 
-exports.findById = async function(req, res) {
+exports.findById = async (req, res) => {
   try {
     const user = await User.findById(req.params.id)
     if (user) {
@@ -46,7 +46,7 @@ exports.findById = async function(req, res) {
   }
 }
 
-exports.findByName = async function(req, res) {
+exports.findByName = async (req, res) => {
   const name = req.query.q
   try {
     const users = await User.find({
@@ -77,7 +77,7 @@ exports.findByName = async function(req, res) {
   }
 }
 
-exports.follow = async function(req, res) {
+exports.follow = async (req, res) => {
   try {
     const userToFollow = await User.findById(req.body.id)
     if (userToFollow) {
@@ -87,7 +87,7 @@ exports.follow = async function(req, res) {
           email: userToFollow.email,
           name: userToFollow.name
         })
-        req.user.save(function(err) {
+        req.user.save(err => {
           if (!err) {
             console.log(req.user.toDTO(true))
             res.status(201).send(req.user.toDTO(true))
@@ -114,7 +114,7 @@ exports.follow = async function(req, res) {
   }
 }
 
-exports.unfollow = function(req, res) {
+exports.unfollow = (req, res) => {
   const userId = req.params.id
   if (req.user.isFollowingUser(userId)) {
     req.user.unfollow(userId)

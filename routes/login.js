@@ -2,7 +2,7 @@ const passport = require('passport')
 
 const authentication = require('../middleware/authentication')
 
-exports.showLoginPage = function(req, res) {
+exports.showLoginPage = (req, res) => {
   res.render('login.ejs', { message: req.flash('loginMessage') })
   req.session.destroy()
 }
@@ -13,7 +13,7 @@ exports.passportLogin = passport.authenticate('local-login', {
   failureFlash: true
 })
 
-exports.getToken = function(req, res) {
+exports.getToken = (req, res) => {
   if (req.user) {
     res.send(req.user)
   } else {
@@ -33,7 +33,7 @@ exports.getToken = function(req, res) {
   req.session.destroy()
 }
 
-exports.logout = function(req, res) {
+exports.logout = (req, res) => {
   req.session.destroy()
   req.logout()
   res.status(200).send()
