@@ -30,7 +30,7 @@ const corsOptions = {
   credentials: true
 }
 
-const tokenSecret = 'UBEAT_TOKEN_SECRET' || process.env.TOKEN_SECRET
+const tokenSecret = 'UFOOD_TOKEN_SECRET' || process.env.TOKEN_SECRET
 
 app.set('views', __dirname + '/views')
 app.set('view engine', 'ejs')
@@ -43,7 +43,7 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(
   session({
-    secret: 'ubeat_session_secret',
+    secret: 'ufood_session_secret',
     resave: true,
     saveUninitialized: true
   })
@@ -59,7 +59,7 @@ app.use(function(error, req, res, next) {
     res.status(412).send({
       errorCode: 'PARSE_ERROR',
       message:
-        'Arguments could not be parsed, make sure request is valid. Refer to the documentation : https://github.com/GLO3102/UBeat/wiki/2-API'
+        'Arguments could not be parsed, make sure request is valid. Refer to the documentation : https://github.com/GLO3102/UFood/wiki/2-API'
     })
   } else {
     res.status(500).send('Something broke!', error)

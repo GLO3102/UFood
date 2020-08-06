@@ -7,7 +7,7 @@ exports.isAuthenticated = async (req, res, next) => {
 
   if (token) {
     try {
-      const decoded = jwt.decode(token, 'UBEAT_TOKEN_SECRET')
+      const decoded = jwt.decode(token, 'UFOOD_TOKEN_SECRET')
 
       if (decoded.exp <= Date.now()) {
         return res.status(401).send({
