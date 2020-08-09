@@ -61,7 +61,7 @@ Le livrable 1 consiste en définir le *design* de votre application et choisir l
     * Position géographique sur la carte
     * Bouton pour directions vers le restaurant
     * Heures d'ouverture
-    * Menu du restaurant
+    * Photos du restaurant
     * Genre(s) associé(s) au restaurant
     * Fourchette de prix du restaurant
     * Cote moyenne du restaurant
