@@ -30,7 +30,7 @@ Notez que l'enseignant fournit les dépôts GitHub pour le cours. Vous recevrez 
 
 ### Exécuter UFood localement
 
-**TODO vseguin** Voir la documentation dans le [wiki](https://github.com/GLO3102/UFood/wiki/1-Installation-locale-UFood).
+Voir la documentation dans le [wiki](https://github.com/GLO3102/UFood/wiki/Installation-locale-UFood).
 
 ### Extensions VSCode pratiques
 
