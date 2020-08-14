@@ -22,6 +22,7 @@ const login = require('./routes/login')
 const signup = require('./routes/signup')
 const user = require('./routes/user')
 const status = require('./routes/status')
+const restaurants = require('./routes/restaurants')
 
 const app = express()
 const corsOptions = {
@@ -92,6 +93,12 @@ app.get('/unsecure/users/:id', user.findById)
 
 app.post('/unsecure/follow', user.follow)
 app.delete('/unsecure/follow/:id', user.unfollow)
+
+// Restaurant
+app.get('/restaurants', authentication.isAuthenticated, restaurants.allRestaurants)
+app.get('/unsecure/restaurants', restaurants.allRestaurants)
+app.get('/restaurants/:id', authentication.isAuthenticated, restaurants.findById)
+app.get('/unsecure/restaurants/:id', restaurants.findById)
 
 const port = process.env.PORT || 3000
 app.listen(port)
