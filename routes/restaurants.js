@@ -2,7 +2,20 @@ const Restaurant = require('../models/restaurant.js').model
 
 exports.allRestaurants = async (req, res, next) => {
   try {
-    const docs = await Restaurant.find({})
+    const { price_range, genres } = req.query
+    const query = {}
+
+    if (price_range != null) {
+      query.price_range = price_range
+    }
+
+    if (genres != null) {
+      query.genres = {
+        $in: genres.split(',') // Comma-delimited array
+      }
+    }
+
+    const docs = await Restaurant.find(query)
     res.status(200).send(docs.map(r => r.toJSON()))
   } catch (e) {
     console.error(e)
