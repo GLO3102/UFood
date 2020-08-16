@@ -4,7 +4,7 @@ const modelHelpers = require('./modelHelpers.js')
 const restaurantSchema = new mongoose.Schema()
 restaurantSchema.add({
   name: String,
-  id: String,
+  place_id: String,
   address: String,
   tel: String,
   position: {
@@ -20,8 +20,8 @@ restaurantSchema.add({
     saturday: String,
     sunday: String,
   },
-  pictures: [],
-  genres: [],
+  pictures: [String],
+  genres: [String],
   price_range: Number,
   rating: Number
 })
