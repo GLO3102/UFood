@@ -2,11 +2,19 @@ const User = require('../models/user.js').model
 
 exports.allUsers = async (req, res) => {
   try {
-    const docs = await User.find({})
-    const users = []
-    for (let i = 0; i < docs.length; i++) {
-      users.push(docs[i].toDTO())
+    const { q } = req.query
+    const limit = req.query.limit ? Number(req.query.limit) : 10
+    let query = {}
+
+    if (q) {
+      query = {
+        name: new RegExp(name, 'i')
+      }
     }
+
+    const docs = await User.find(query).limit(limit)
+    const users = docs.map(d => d.toDTO())
+
     res.status(200).send(users)
   } catch (err) {
     console.error(err)
