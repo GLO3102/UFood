@@ -8,7 +8,7 @@ exports.allUsers = async (req, res) => {
 
     if (q) {
       query = {
-        name: new RegExp(name, 'i')
+        name: new RegExp(q, 'i')
       }
     }
 
