@@ -2,7 +2,7 @@ const Restaurant = require('../models/restaurant.js').model
 
 exports.allRestaurants = async (req, res, next) => {
   try {
-    const { price_range, genres } = req.query
+    const { q, page, price_range, genres } = req.query
     const query = {}
     const limit = req.query.limit ? Number(req.query.limit) : 10
 
@@ -18,8 +18,19 @@ exports.allRestaurants = async (req, res, next) => {
       }
     }
 
-    const docs = await Restaurant.find(query).limit(limit)
-    res.status(200).send(docs.map(r => r.toJSON()))
+    if (q != null) {
+      query.name = {
+        $regex: q,
+      }
+    }
+
+    const docs = await Restaurant.find(query).limit(limit).skip(limit * page)
+    const count = await Restaurant.count(query)
+
+    res.status(200).send({
+      items: docs.map(r => r.toJSON()),
+      total: count,
+    })
   } catch (e) {
     console.error(e)
     res.status(500).send(e)
