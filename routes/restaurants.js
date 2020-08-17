@@ -4,6 +4,7 @@ exports.allRestaurants = async (req, res, next) => {
   try {
     const { price_range, genres } = req.query
     const query = {}
+    const limit = req.query.limit ? Number(req.query.limit) : 10
 
     if (price_range != null) {
       query.price_range = price_range
@@ -15,7 +16,7 @@ exports.allRestaurants = async (req, res, next) => {
       }
     }
 
-    const docs = await Restaurant.find(query)
+    const docs = await Restaurant.find(query).limit(limit)
     res.status(200).send(docs.map(r => r.toJSON()))
   } catch (e) {
     console.error(e)
