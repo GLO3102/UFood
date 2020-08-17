@@ -7,12 +7,14 @@ exports.allRestaurants = async (req, res, next) => {
     const limit = req.query.limit ? Number(req.query.limit) : 10
 
     if (price_range != null) {
-      query.price_range = price_range
+      query.price_range = {
+        $in: price_range.split(',')
+      }
     }
 
     if (genres != null) {
       query.genres = {
-        $in: genres.split(',') // Comma-delimited array
+        $in: genres.split(',')
       }
     }
 
