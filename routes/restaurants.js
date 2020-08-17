@@ -21,6 +21,7 @@ exports.allRestaurants = async (req, res, next) => {
     if (q != null) {
       query.name = {
         $regex: q,
+        $options: 'i'
       }
     }
 
