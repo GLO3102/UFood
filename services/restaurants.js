@@ -2,7 +2,7 @@ const Restaurant = require('../repositories/restaurant.js').model
 
 exports.allRestaurants = async (req, res) => {
   try {
-    const { q, page, price_range, genres } = req.query
+    const { q, page, price_range, genres, lon, lat } = req.query
     const query = {}
     const limit = req.query.limit ? Number(req.query.limit) : 10
 
@@ -22,6 +22,25 @@ exports.allRestaurants = async (req, res) => {
       query.name = {
         $regex: q,
         $options: 'i'
+      }
+    }
+
+    if (lon && lat) {
+      const bbox = {
+        type: 'Polygon',
+        coordinates: [[
+          [lon - 1, lat + 1],
+          [lon + 1, lat + 1],
+          [lon + 1, lat - 1],
+          [lon - 1, lat - 1],
+          [lon - 1, lat + 1]
+        ]]
+      };
+
+      query.location = {
+        $geoWithin: {
+          $geometry: bbox
+        }
       }
     }
 
