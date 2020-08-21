@@ -32,7 +32,7 @@ exports.findById = async (req, res) => {
     const user = await User.findById(req.params.id)
     if (user) {
       if (!res.headerSent) {
-        res.status(200).send(user.toDTO(true))
+        res.status(200).send(user.toDTO(true, true))
       }
     } else {
       if (!res.headerSent) {
@@ -68,7 +68,7 @@ exports.findByName = async (req, res) => {
     if (users) {
       const formattedUsers = []
       for (let i = 0; i < users.length; i++) {
-        formattedUsers.push(users[i].toDTO(true))
+        formattedUsers.push(users[i].toDTO(true, true))
       }
       res.status(200).send(formattedUsers)
     } else {
@@ -122,7 +122,7 @@ exports.follow = async (req, res) => {
     await req.user.save()
     await userToFollow.save()
 
-    res.status(201).send(req.user.toDTO(true))
+    res.status(201).send(req.user.toDTO(true, true))
   } catch (err) {
     console.error(err)
     res.send(500)
@@ -147,7 +147,7 @@ exports.unfollow = async (req, res) => {
       await unfollowedUser.removeFollower(req.user.id)
     }
 
-    res.status(200).send(req.user.toDTO(true))
+    res.status(200).send(req.user.toDTO(true, true))
   } catch (err) {
     console.error(err)
     res.send(500)
