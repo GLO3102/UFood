@@ -18,11 +18,12 @@ mongoose.connect(
 )
 
 const authentication = require('./middleware/authentication')
-const login = require('./routes/login')
-const signup = require('./routes/signup')
-const user = require('./routes/user')
-const status = require('./routes/status')
-const restaurants = require('./routes/restaurants')
+const login = require('./services/login')
+const signup = require('./services/signup')
+const user = require('./services/user')
+const status = require('./services/status')
+const restaurants = require('./services/restaurants')
+const favorites = require('./services/favorites')
 
 const app = express()
 const corsOptions = {
@@ -83,6 +84,7 @@ app.get('/tokenInfo', authentication.isAuthenticated, login.getToken)
 // Secure API
 app.get('/users', authentication.isAuthenticated, user.allUsers)
 app.get('/users/:id', authentication.isAuthenticated, user.findById)
+app.get('/users/:id/favorites', authentication.isAuthenticated, favorites.findFavoriteListsByUser)
 
 app.post('/follow', authentication.isAuthenticated, user.follow)
 app.delete('/follow/:id', authentication.isAuthenticated, user.unfollow)
@@ -90,15 +92,39 @@ app.delete('/follow/:id', authentication.isAuthenticated, user.unfollow)
 app.get('/restaurants', authentication.isAuthenticated, restaurants.allRestaurants)
 app.get('/restaurants/:id', authentication.isAuthenticated, restaurants.findById)
 
+app.get('/favorites', authentication.isAuthenticated, favorites.getFavoriteLists)
+app.get('/favorites/:id', authentication.isAuthenticated, favorites.findFavoriteListById)
+app.post('/favorites', authentication.isAuthenticated, favorites.createFavoriteList)
+app.put('/favorites/:id', authentication.isAuthenticated, favorites.updateFavoriteList)
+app.delete('/favorites/:id', authentication.isAuthenticated, favorites.removeFavoriteList)
+app.post('/favorites/:id/restaurants', authentication.isAuthenticated, favorites.addRestaurantToFavoriteList)
+app.delete(
+  '/favorites/:id/restaurants/:restaurantId',
+  authentication.isAuthenticated,
+  favorites.removeRestaurantFromFavoriteList
+)
+
 // Unsecure API
 app.get('/unsecure/users', user.allUsers)
 app.get('/unsecure/users/:id', user.findById)
+app.get('/unsecure/users/:id/favorites', favorites.findFavoriteListsByUser)
 
 app.post('/unsecure/follow', user.follow)
 app.delete('/unsecure/follow/:id', user.unfollow)
 
 app.get('/unsecure/restaurants', restaurants.allRestaurants)
 app.get('/unsecure/restaurants/:id', restaurants.findById)
+
+app.get('/unsecure/favorites', favorites.getFavoriteLists)
+app.get('/unsecure/favorites/:id', favorites.findFavoriteListById)
+app.post('/unsecure/favorites', favorites.createFavoriteListUnsecure)
+app.put('/unsecure/favorites/:id', favorites.updateFavoriteList)
+app.delete('/unsecure/favorites/:id', favorites.removeFavoriteListUnsecure)
+app.post('/unsecure/favorites/:id/restaurants', favorites.addRestaurantToFavoriteList)
+app.delete(
+  '/unsecure/favorites/:id/restaurants/:restaurantId',
+  favorites.removeRestaurantFromFavoriteList
+)
 
 const port = process.env.PORT || 3000
 app.listen(port)

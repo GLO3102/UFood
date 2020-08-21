@@ -1,6 +1,6 @@
-const Restaurant = require('../models/restaurant.js').model
+const Restaurant = require('../repositories/restaurant.js').model
 
-exports.allRestaurants = async (req, res, next) => {
+exports.allRestaurants = async (req, res) => {
   try {
     const { q, page, price_range, genres } = req.query
     const query = {}
@@ -47,7 +47,7 @@ const returnNotFound = (res, req) => {
   }
 }
 
-exports.findById = async (req, res, next) => {
+exports.findById = async (req, res) => {
   try {
     const restaurant = await Restaurant.findById(req.params.id)
     if (restaurant) {
