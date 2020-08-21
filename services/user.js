@@ -1,5 +1,14 @@
 const User = require('../repositories/user.js').model
 
+const returnNotFound = (req, res) => {
+  if (!res.headerSent) {
+    res.status(404).send({
+      errorCode: 'USER_NOT_FOUND',
+      message: 'User ' + req.params.id + ' was not found'
+    })
+  }
+}
+
 exports.allUsers = async (req, res) => {
   try {
     const { page, q } = req.query
@@ -30,62 +39,22 @@ exports.allUsers = async (req, res) => {
 exports.findById = async (req, res) => {
   try {
     const user = await User.findById(req.params.id)
-    if (user) {
-      if (!res.headerSent) {
-        res.status(200).send(user.toDTO(true, true))
-      }
-    } else {
-      if (!res.headerSent) {
-        res.status(404).send({
-          errorCode: 'USER_NOT_FOUND',
-          message: 'User ' + req.params.id + ' was not found'
-        })
-      }
+
+    if (!user) {
+      return returnNotFound(req, res)
     }
+
+    res.status(200).send(user.toDTO(true, true))
   } catch (err) {
     if (err.name === 'CastError') {
       if (!res.headerSent) {
-        res.status(404).send({
-          errorCode: 'USER_NOT_FOUND',
-          message: 'User ' + req.params.id + ' was not found'
-        })
+        returnNotFound(req, res)
       }
     } else {
       console.error(err)
       if (!res.headerSent) {
         res.status(500).send(err)
       }
-    }
-  }
-}
-
-exports.findByName = async (req, res) => {
-  const name = req.query.q
-  try {
-    const users = await User.find({
-      name: new RegExp(name, 'i')
-    })
-    if (users) {
-      const formattedUsers = []
-      for (let i = 0; i < users.length; i++) {
-        formattedUsers.push(users[i].toDTO(true, true))
-      }
-      res.status(200).send(formattedUsers)
-    } else {
-      res.status(404).send({
-        errorCode: 'USER_NOT_FOUND',
-        message: 'User ' + req.params.id + ' was not found'
-      })
-    }
-  } catch (err) {
-    console.error(err)
-    if (err.name === 'CastError') {
-      res.status(404).send({
-        errorCode: 'USER_NOT_FOUND',
-        message: 'User ' + req.params.id + ' was not found'
-      })
-    } else {
-      res.status(500).send(err)
     }
   }
 }
