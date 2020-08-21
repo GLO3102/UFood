@@ -99,7 +99,7 @@ Le livrable 2 consiste en l'intégration des fonctionnalités du livrable 1 avec
     * Intégrer la page complètement avec l'API
     * Pour chaque visite d'un restaurant, pouvoir ouvrir la modale de visite d'un restaurant en mode *read-only* avec les informations reliées à la visite.
     * Permettre de créer une liste de restaurants favoris et de lui donner un nom.
-    * Visualiser les listes de restaurants favoris de l'usager.
+    * Visualiser les listes de restaurants favoris de l'usager et leur contenu.
     * Permettre de modifier une liste de restaurants
         * Changer le nom de la liste
         * Ajouter/Retirer des restaurants d'une liste
