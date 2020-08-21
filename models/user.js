@@ -1,7 +1,6 @@
 const mongoose = require('mongoose')
 const bcrypt = require('bcryptjs')
 const modelHelpers = require('./modelHelpers.js')
-const _ = require('underscore')
 
 const userSchema = new mongoose.Schema()
 userSchema.add({
