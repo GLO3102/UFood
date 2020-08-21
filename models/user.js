@@ -10,6 +10,13 @@ userSchema.add({
   password: String,
   token: String,
   expiration: Number,
+  followers: [
+    {
+      name: String,
+      email: String,
+      id: String,
+    }
+  ],
   following: [
     {
       name: String,
@@ -29,13 +36,17 @@ userSchema.methods.toDTO = function(following) {
   }
 
   if (following) {
-    dto.following = obj.following.map(user => {
-      return {
-        id: user.id,
-        email: user.email,
-        name: user.name
-      }
-    })
+    dto.following = obj.following.map(user => ({
+      id: user.id,
+      email: user.email,
+      name: user.name
+    }))
+
+    dto.followers = obj.followers.map(user => ({
+      id: user.id,
+      email: user.email,
+      name: user.name
+    }))
   }
 
   return dto
@@ -50,18 +61,14 @@ userSchema.methods.isFollowingUser = function(userId) {
   return false
 }
 
-userSchema.methods.unfollow = function(userId) {
-  let userToRemove
-  for (let i = 0; i < this.following.length; i++) {
-    if (this.following[i].id == userId) {
-      userToRemove = this.following[i]
-    }
-  }
+userSchema.methods.unfollow = function (userId) {
+  this.following = this.following.filter(user => user.id !== userId)
+  this.save()
+}
 
-  if (userToRemove) {
-    this.following = _.without(this.following, userToRemove)
-    this.save()
-  }
+userSchema.methods.removeFollower = function (userId) {
+  this.followers = this.followers.filter(user => user.id !== userId)
+  this.save()
 }
 
 userSchema.methods.generateHash = function(password) {
