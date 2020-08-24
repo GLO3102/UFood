@@ -20,12 +20,13 @@
     "passport-local": "1.0.0"
   },
   "devDependencies": {
+    "husky": "^4.2.5",
     "nodemon": "^2.0.4"
   },
   "scripts": {
     "start": "node ./index.js",
     "dev": "nodemon ./index.js",
-    "lint": "prettier --config=.prettierrc \"**/*.{js,jsx,ts,tsx,scss}\" --write"
+    "lint": "prettier --config=.prettierrc \"**/*.*\" --write --ignore-unknown"
   },
   "repository": {
     "type": "git",
@@ -39,10 +40,7 @@
   "homepage": "https://github.com/GLO3102/UFood",
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged"
+      "pre-commit": "npm run lint"
     }
-  },
-  "lint-staged": {
-    "**/*": "prettier --write --ignore-unknown"
   }
 }
