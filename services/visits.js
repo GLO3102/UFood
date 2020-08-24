@@ -16,13 +16,13 @@ exports.allUserVisits = async (req, res) => {
     const limit = req.query.limit ? Number(req.query.limit) : 10
     const query = { user_id: req.params.id }
 
-    const visits = await Visit.find(query)
+    const docs = await Visit.find(query)
       .limit(limit)
       .skip(limit * page)
     const count = await Visit.count(query)
 
     res.status(200).send({
-      items: visits,
+      items: visits.map(r => r.toJSON()),
       total: count
     })
   } catch (err) {
