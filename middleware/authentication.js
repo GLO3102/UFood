@@ -1,5 +1,5 @@
 const url = require('url')
-const UserModel = require('../models/user').model
+const UserModel = require('../repositories/user').model
 const jwt = require('jwt-simple')
 
 exports.isAuthenticated = async (req, res, next) => {
