@@ -18,7 +18,7 @@ const handleError = (req, res, err) => {
   }
 }
 
-exports.createFavoriteList = async function (req, res) {
+exports.createFavoriteList = async (req, res) => {
   try {
     const user = await User.findById(req.user.id)
     const favoriteList = new FavoriteList({
@@ -33,7 +33,7 @@ exports.createFavoriteList = async function (req, res) {
   }
 }
 
-exports.createFavoriteListUnsecure = async function (req, res) {
+exports.createFavoriteListUnsecure = async (req, res) => {
   try {
     if (!req.body.owner || !req.body.name) {
       return res(400).send({
@@ -65,7 +65,7 @@ exports.createFavoriteListUnsecure = async function (req, res) {
 exports.addRestaurantToFavoriteList = async (req, res) => {
   try {
     if (!req.body) {
-      return res.status(412).send({
+      return res.status(400).send({
         errorCode: 'REQUEST_BODY_REQUIRED',
         message: 'Request body is missing'
       })
@@ -86,7 +86,7 @@ exports.addRestaurantToFavoriteList = async (req, res) => {
   }
 }
 
-exports.removeRestaurantFromFavoriteList = async function (req, res) {
+exports.removeRestaurantFromFavoriteList = async (req, res) => {
   try {
     const favoriteList = await FavoriteList.findById(req.params.id)
 
@@ -139,7 +139,7 @@ exports.removeFavoriteList = async (req, res) => {
     }
 
     if (favoriteList.owner.id !== req.user.id) {
-      return res.status(412).send({
+      return res.status(400).send({
         errorCode: 'NOT_FAVORITE_LIST_OWNER',
         message: 'Favorite list can only be deleted by their owner'
       })
