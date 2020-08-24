@@ -24,7 +24,8 @@
   },
   "scripts": {
     "start": "node ./index.js",
-    "dev": "nodemon ./index.js"
+    "dev": "nodemon ./index.js",
+    "lint": "prettier --config=.prettierrc \"**/*.{js,jsx,ts,tsx,scss}\" --write"
   },
   "repository": {
     "type": "git",
@@ -35,5 +36,13 @@
   "bugs": {
     "url": "https://github.com/GLO3102/UFood/issues"
   },
-  "homepage": "https://github.com/GLO3102/UFood"
+  "homepage": "https://github.com/GLO3102/UFood",
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "**/*": "prettier --write --ignore-unknown"
+  }
 }

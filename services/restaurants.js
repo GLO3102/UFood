@@ -34,12 +34,14 @@ exports.allRestaurants = async (req, res) => {
       }
     }
 
-    const docs = await Restaurant.find(query).limit(limit).skip(limit * page)
+    const docs = await Restaurant.find(query)
+      .limit(limit)
+      .skip(limit * page)
     const count = await Restaurant.count(query)
 
     res.status(200).send({
       items: docs.map(r => r.toJSON()),
-      total: count,
+      total: count
     })
   } catch (e) {
     console.error(e)

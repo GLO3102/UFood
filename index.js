@@ -9,13 +9,10 @@ const passport = require('passport')
 
 const mongoose = require('mongoose')
 const mongoUri = process.env.DATABASE_URL || 'mongodb://localhost/ufood'
-mongoose.connect(
-  mongoUri,
-  {
-    autoReconnect: true,
-    useNewUrlParser: true
-  }
-)
+mongoose.connect(mongoUri, {
+  autoReconnect: true,
+  useNewUrlParser: true
+})
 
 const authentication = require('./middleware/authentication')
 const login = require('./services/login')
@@ -24,6 +21,7 @@ const user = require('./services/user')
 const status = require('./services/status')
 const restaurants = require('./services/restaurants')
 const favorites = require('./services/favorites')
+const visits = require('./services/visits')
 
 const app = express()
 const corsOptions = {
@@ -56,7 +54,7 @@ app.use(flash())
 app.use(cors(corsOptions))
 app.use(express.static(__dirname + '/public'))
 
-app.use(function(error, req, res, next) {
+app.use(function (error, req, res, next) {
   if (error instanceof SyntaxError) {
     res.status(412).send({
       errorCode: 'PARSE_ERROR',
@@ -86,6 +84,10 @@ app.get('/users', authentication.isAuthenticated, user.allUsers)
 app.get('/users/:id', authentication.isAuthenticated, user.findById)
 app.get('/users/:id/favorites', authentication.isAuthenticated, favorites.findFavoriteListsByUser)
 
+app.get('/users/:id/restaurants/visits', authentication.isAuthenticated, visits.allUserVisits)
+app.get('/users/:id/restaurants/visits/:visitId', authentication.isAuthenticated, visits.findById)
+app.post('/users/:id/restaurants/visits', authentication.isAuthenticated, visits.createVisit)
+
 app.post('/follow', authentication.isAuthenticated, user.follow)
 app.delete('/follow/:id', authentication.isAuthenticated, user.unfollow)
 
@@ -97,7 +99,11 @@ app.get('/favorites/:id', authentication.isAuthenticated, favorites.findFavorite
 app.post('/favorites', authentication.isAuthenticated, favorites.createFavoriteList)
 app.put('/favorites/:id', authentication.isAuthenticated, favorites.updateFavoriteList)
 app.delete('/favorites/:id', authentication.isAuthenticated, favorites.removeFavoriteList)
-app.post('/favorites/:id/restaurants', authentication.isAuthenticated, favorites.addRestaurantToFavoriteList)
+app.post(
+  '/favorites/:id/restaurants',
+  authentication.isAuthenticated,
+  favorites.addRestaurantToFavoriteList
+)
 app.delete(
   '/favorites/:id/restaurants/:restaurantId',
   authentication.isAuthenticated,
@@ -108,6 +114,10 @@ app.delete(
 app.get('/unsecure/users', user.allUsers)
 app.get('/unsecure/users/:id', user.findById)
 app.get('/unsecure/users/:id/favorites', favorites.findFavoriteListsByUser)
+
+app.get('/unsecure/users/:id/restaurants/visits', visits.allUserVisits)
+app.get('/unsecure/users/:id/restaurants/visits/:visitId', visits.findById)
+app.post('/unsecure/users/:id/restaurants/visits', visits.createVisit)
 
 app.post('/unsecure/follow', user.follow)
 app.delete('/unsecure/follow/:id', user.unfollow)

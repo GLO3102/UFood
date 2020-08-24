@@ -18,7 +18,7 @@ restaurantSchema.add({
     thursday: String,
     friday: String,
     saturday: String,
-    sunday: String,
+    sunday: String
   },
   pictures: [String],
   genres: [String],
