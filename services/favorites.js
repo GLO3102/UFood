@@ -177,7 +177,7 @@ exports.getFavoriteLists = async (req, res) => {
     const { page } = req.query
     const limit = req.query.limit ? Number(req.query.limit) : 10
 
-    const favoriteLists = await FavoriteList.limit(limit).skip(limit * page)
+    const favoriteLists = await FavoriteList.find({}).limit(limit).skip(limit * page)
     const count = await FavoriteList.count()
 
     res.status(200).send({
