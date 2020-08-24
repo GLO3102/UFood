@@ -124,11 +124,18 @@ exports.createVisit = async (req, res) => {
 
     // Compute new restaurant rating
     if (visitCount !== 0) {
-      restaurant.rating = restaurant.rating + ((req.body.rating - restaurant.rating) / (visitCount + 1))
+      restaurant.rating =
+        restaurant.rating + (req.body.rating - restaurant.rating) / (visitCount + 1)
     } else {
       restaurant.rating = req.body.rating
     }
-    
+
+    if (restaurant.rating > 5) {
+      restaurant.rating = 5
+    } else if (restaurant.rating < 0) {
+      restaurant.rating = 0
+    }
+
     await restaurant.save()
 
     res.status(201).send(visit.toDTO())
