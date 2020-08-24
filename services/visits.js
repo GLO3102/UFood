@@ -22,7 +22,7 @@ exports.allUserVisits = async (req, res) => {
     const count = await Visit.count(query)
 
     res.status(200).send({
-      items: visits.map(r => r.toJSON()),
+      items: docs.map(r => r.toJSON()),
       total: count
     })
   } catch (err) {

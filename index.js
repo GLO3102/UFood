@@ -85,8 +85,8 @@ app.get('/users/:id', authentication.isAuthenticated, user.findById)
 app.get('/users/:id/favorites', authentication.isAuthenticated, favorites.findFavoriteListsByUser)
 
 app.get('/users/:id/restaurants/visits', authentication.isAuthenticated, visits.allUserVisits)
-app.get('/users/:id/restaurants/visits/:visitId', authentication.isAuthenticated, visits.findById)
-app.post('/users/:id/restaurants/visits', authentication.isAuthenticated, visits.createVisit)
+//app.get('/users/:id/restaurants/visits/:visitId', authentication.isAuthenticated, visits.findById)
+//app.post('/users/:id/restaurants/visits', authentication.isAuthenticated, visits.createVisit)
 
 app.post('/follow', authentication.isAuthenticated, user.follow)
 app.delete('/follow/:id', authentication.isAuthenticated, user.unfollow)
@@ -116,8 +116,8 @@ app.get('/unsecure/users/:id', user.findById)
 app.get('/unsecure/users/:id/favorites', favorites.findFavoriteListsByUser)
 
 app.get('/unsecure/users/:id/restaurants/visits', visits.allUserVisits)
-app.get('/unsecure/users/:id/restaurants/visits/:visitId', visits.findById)
-app.post('/unsecure/users/:id/restaurants/visits', visits.createVisit)
+//app.get('/unsecure/users/:id/restaurants/visits/:visitId', visits.findById)
+//app.post('/unsecure/users/:id/restaurants/visits', visits.createVisit)
 
 app.post('/unsecure/follow', user.follow)
 app.delete('/unsecure/follow/:id', user.unfollow)

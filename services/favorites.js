@@ -176,7 +176,7 @@ exports.getFavoriteLists = async (req, res) => {
     const { page } = req.query
     const limit = req.query.limit ? Number(req.query.limit) : 10
 
-    const favoriteLists = await FavoriteList.find({})
+    const docs = await FavoriteList.find({})
       .limit(limit)
       .skip(limit * page)
     const count = await FavoriteList.count()
@@ -214,13 +214,7 @@ exports.findFavoriteListsByUser = async (req, res) => {
     const userId = req.params.id
     const query = { 'owner.id': userId }
 
-<<<<<<< HEAD
-    const favoriteLists = await FavoriteList.find(query)
-      .limit(limit)
-      .skip(limit * page)
-=======
     const docs = await FavoriteList.find(query).limit(limit).skip(limit * page)
->>>>>>> master
     const count = await FavoriteList.count(query)
 
     const favoriteLists = docs.map(d => d.toJSON())
