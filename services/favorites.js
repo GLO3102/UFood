@@ -26,7 +26,7 @@ exports.createFavoriteList = async function(req, res) {
       owner: user.toJSON()
     })
     await favoriteList.save()
-    res.status(201).send(favoriteList)
+    res.status(201).send(favoriteList.toDTO())
   } catch (err) {
     console.error(err)
     res.status(500)
@@ -50,7 +50,7 @@ exports.createFavoriteListUnsecure = async function(req, res) {
         owner: user.toJSON()
       })
       await favoriteList.save()
-      res.status(201).send(favoriteList)
+      res.status(201).send(favoriteList.toDTO())
     } else {
       res.status(404).send({
         errorCode: 'USER_NOT_FOUND',
@@ -81,7 +81,7 @@ exports.addRestaurantToFavoriteList = async (req, res) => {
     const restaurant = new Restaurant(req.body)
     favoriteList.restaurants.push(restaurant.toJSON())
     favoriteList.save()
-    res.status(200).send(favoriteList)
+    res.status(200).send(favoriteList.toDTO())
   } catch (err) {
     handleError(req, res, err)
   }
@@ -108,7 +108,7 @@ exports.removeRestaurantFromFavoriteList = async function(req, res) {
 
     restaurantToRemove.remove()
     favoriteList.save()
-    res.status(200).send(favoriteList)
+    res.status(200).send(favoriteList.toDTO())
   } catch (err) {
     handleError(req, res, err)
   }
@@ -125,7 +125,7 @@ exports.updateFavoriteList = async (req, res) => {
     favoriteList.name = req.body.name
     favoriteList.tracks = req.body.tracks
     favoriteList.save()
-    res.status(200).send(favoriteList)
+    res.status(200).send(favoriteList.toDTO())
   } catch (err) {
     handleError(req, res, err)
   }
@@ -181,7 +181,7 @@ exports.getFavoriteLists = async (req, res) => {
     const count = await FavoriteList.count()
 
     res.status(200).send({
-      items: favoriteLists,
+      items: favoriteLists.map(l => l.toDTO()),
       total: count
     })
   } catch (err) {
@@ -198,7 +198,7 @@ exports.findFavoriteListById = async (req, res) => {
       return returnNotFound(req, res)
     }
 
-    res.status(200).send(favoriteList)
+    res.status(200).send(favoriteList.toDTO())
   } catch (err) {
     handleError(req, res, err)
   }
@@ -215,7 +215,7 @@ exports.findFavoriteListsByUser = async (req, res) => {
     const count = await FavoriteList.count(query)
 
     res.status(200).send({
-      items: favoriteLists,
+      items: favoriteLists.map(l => l.toDTO()),
       total: count
     })
   } catch (err) {
