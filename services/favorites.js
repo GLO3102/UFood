@@ -177,11 +177,13 @@ exports.getFavoriteLists = async (req, res) => {
     const { page } = req.query
     const limit = req.query.limit ? Number(req.query.limit) : 10
 
-    const favoriteLists = await FavoriteList.find({}).limit(limit).skip(limit * page)
+    const docs = await FavoriteList.find({}).limit(limit).skip(limit * page)
     const count = await FavoriteList.count()
 
+    const favoriteLists = docs.map(d => d.toDTO())
+
     res.status(200).send({
-      items: favoriteLists.map(l => l.toDTO()),
+      items: favoriteLists,
       total: count
     })
   } catch (err) {
@@ -211,11 +213,13 @@ exports.findFavoriteListsByUser = async (req, res) => {
     const userId = req.params.id
     const query = {'owner.id': userId}
 
-    const favoriteLists = await FavoriteList.find(query).limit(limit).skip(limit * page)
+    const docs = await FavoriteList.find(query).limit(limit).skip(limit * page)
     const count = await FavoriteList.count(query)
 
+    const favoriteLists = docs.map(d => d.toDTO())
+
     res.status(200).send({
-      items: favoriteLists.map(l => l.toDTO()),
+      items: favoriteLists,
       total: count
     })
   } catch (err) {
