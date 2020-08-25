@@ -62,7 +62,7 @@ exports.allRestaurants = async (req, res) => {
 
     res.status(200).send({
       items: docs.map(r => r.toDTO()),
-      total: count,
+      total: count
     })
   } catch (e) {
     console.error(e)
