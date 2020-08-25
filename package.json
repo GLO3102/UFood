@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "main": "index.js",
   "dependencies": {
+    "@googlemaps/google-maps-services-js": "^3.1.6",
     "axios": "^0.19.2",
     "bcryptjs": "^2.4.3",
     "body-parser": "1.19.0",
@@ -17,7 +18,8 @@
     "moment": "^2.27.0",
     "mongoose": "^5.9.27",
     "passport": "0.4.1",
-    "passport-local": "1.0.0"
+    "passport-local": "1.0.0",
+    "request": "^2.88.2"
   },
   "devDependencies": {
     "nodemon": "^2.0.4"
