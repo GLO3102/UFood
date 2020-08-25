@@ -36,7 +36,7 @@ restaurantSchema.add({
   rating: Number
 })
 
-restaurantSchema.methods.toDTO = () => {
+restaurantSchema.methods.toDTO = function () {
   const dto = this.toJSON()
 
   delete dto.location._id
