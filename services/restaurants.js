@@ -61,8 +61,8 @@ exports.allRestaurants = async (req, res) => {
     const count = await Restaurant.count(query)
 
     res.status(200).send({
-      items: docs.map(r => r.toJSON()),
-      total: count
+      items: docs.map(r => r.toDTO()),
+      total: count,
     })
   } catch (e) {
     console.error(e)
@@ -78,7 +78,7 @@ exports.findById = async (req, res) => {
       return returnNotFound(req, res)
     }
 
-    res.status(200).send(restaurant.toJSON())
+    res.status(200).send(restaurant.toDTO())
   } catch (err) {
     if (err.name === 'CastError') {
       returnNotFound(req, res)

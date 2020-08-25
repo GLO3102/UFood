@@ -36,6 +36,14 @@ restaurantSchema.add({
   rating: Number
 })
 
+restaurantSchema.methods.toDTO = function () {
+  const dto = this.toJSON()
+
+  delete dto.location._id
+
+  return dto
+}
+
 restaurantSchema.method('toJSON', modelHelpers.toJSON)
 
 const Restaurant = mongoose.model('Restaurant', restaurantSchema)
