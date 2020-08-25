@@ -54,7 +54,7 @@ app.use(flash())
 app.use(cors(corsOptions))
 app.use(express.static(__dirname + '/public'))
 
-app.use(function(error, req, res, next) {
+app.use(function (error, req, res, next) {
   if (error instanceof SyntaxError) {
     res.status(412).send({
       errorCode: 'PARSE_ERROR',
