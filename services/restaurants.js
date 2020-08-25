@@ -37,14 +37,16 @@ exports.allRestaurants = async (req, res) => {
     if (lon && lat) {
       const bbox = {
         type: 'Polygon',
-        coordinates: [[
-          [lon - 1, lat + 1],
-          [lon + 1, lat + 1],
-          [lon + 1, lat - 1],
-          [lon - 1, lat - 1],
-          [lon - 1, lat + 1]
-        ]]
-      };
+        coordinates: [
+          [
+            [lon - 1, lat + 1],
+            [lon + 1, lat + 1],
+            [lon + 1, lat - 1],
+            [lon - 1, lat - 1],
+            [lon - 1, lat + 1]
+          ]
+        ]
+      }
 
       query.location = {
         $geoWithin: {
@@ -53,12 +55,14 @@ exports.allRestaurants = async (req, res) => {
       }
     }
 
-    const docs = await Restaurant.find(query).limit(limit).skip(limit * page)
+    const docs = await Restaurant.find(query)
+      .limit(limit)
+      .skip(limit * page)
     const count = await Restaurant.count(query)
 
     res.status(200).send({
       items: docs.map(r => r.toDTO()),
-      total: count,
+      total: count
     })
   } catch (e) {
     console.error(e)

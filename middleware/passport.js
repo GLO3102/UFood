@@ -3,13 +3,13 @@ const User = require('../repositories/user').model
 const moment = require('moment')
 const jwt = require('jwt-simple')
 
-module.exports = function(passport, app) {
-  passport.serializeUser(function(user, done) {
+module.exports = function (passport, app) {
+  passport.serializeUser(function (user, done) {
     done(null, user.id)
   })
 
-  passport.deserializeUser(function(id, done) {
-    User.findById(id, function(err, user) {
+  passport.deserializeUser(function (id, done) {
+    User.findById(id, function (err, user) {
       done(err, user)
     })
   })
@@ -22,20 +22,18 @@ module.exports = function(passport, app) {
         passwordField: 'password',
         passReqToCallback: true
       },
-      function(req, email, password, done) {
+      function (req, email, password, done) {
         if (email) {
           email = email.toLowerCase()
         }
 
-        process.nextTick(async function() {
+        process.nextTick(async function () {
           try {
             const user = await User.findOne({ email: email })
             if (!user || !user.validPassword(password)) {
               return done(null, false)
             } else {
-              const expires = moment()
-                .add(1, 'days')
-                .valueOf()
+              const expires = moment().add(1, 'days').valueOf()
               user.token = jwt.encode(
                 {
                   iss: user.id,
@@ -44,7 +42,7 @@ module.exports = function(passport, app) {
                 app.get('jwtTokenSecret')
               )
 
-              user.save(function(err) {
+              user.save(function (err) {
                 if (err) {
                   return done(err)
                 }
@@ -67,12 +65,12 @@ module.exports = function(passport, app) {
         passwordField: 'password',
         passReqToCallback: true
       },
-      function(req, email, password, done) {
+      function (req, email, password, done) {
         if (email) {
           email = email.toLowerCase()
         }
 
-        process.nextTick(async function() {
+        process.nextTick(async function () {
           if (!req.user) {
             try {
               const user = await User.findOne({ email: email })
@@ -85,7 +83,7 @@ module.exports = function(passport, app) {
                 newUser.email = email
                 newUser.password = newUser.generateHash(password)
 
-                newUser.save(function(err) {
+                newUser.save(function (err) {
                   if (err) {
                     return done(err)
                   }

@@ -13,7 +13,7 @@ userSchema.add({
     {
       name: String,
       email: String,
-      id: String,
+      id: String
     }
   ],
   following: [
@@ -25,7 +25,7 @@ userSchema.add({
   ]
 })
 
-userSchema.methods.toDTO = function (following, followers) {
+userSchema.methods.toDTO = (following, followers) => {
   const obj = this.toJSON()
 
   const dto = {
@@ -53,7 +53,7 @@ userSchema.methods.toDTO = function (following, followers) {
   return dto
 }
 
-userSchema.methods.isFollowingUser = function (userId) {
+userSchema.methods.isFollowingUser = userId => {
   for (let i = 0; i < this.following.length; i++) {
     if (this.following[i].id == userId) {
       return true
@@ -62,20 +62,20 @@ userSchema.methods.isFollowingUser = function (userId) {
   return false
 }
 
-userSchema.methods.unfollow = function (userId) {
+userSchema.methods.unfollow = userId => {
   this.following = this.following.filter(user => user.id !== userId)
   this.save()
 }
 
-userSchema.methods.removeFollower = function (userId) {
+userSchema.methods.removeFollower = userId => {
   this.followers = this.followers.filter(user => user.id !== userId)
   this.save()
 }
 
-userSchema.methods.generateHash = function (password) {
+userSchema.methods.generateHash = password => {
   return bcrypt.hashSync(password, bcrypt.genSaltSync(8))
 }
-userSchema.methods.validPassword = function (password) {
+userSchema.methods.validPassword = password => {
   return bcrypt.compareSync(password, this.password)
 }
 
