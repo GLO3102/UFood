@@ -11,7 +11,7 @@ const returnNotFound = (req, res) => {
 
 exports.allRestaurants = async (req, res) => {
   try {
-    const { q, page, price_range, genres } = req.query
+    const { q, page, price_range, genres, lon, lat } = req.query
     const query = {}
     const limit = req.query.limit ? Number(req.query.limit) : 10
 
@@ -34,12 +34,35 @@ exports.allRestaurants = async (req, res) => {
       }
     }
 
-    const docs = await Restaurant.find(query).limit(limit).skip(limit * page)
+    if (lon && lat) {
+      const bbox = {
+        type: 'Polygon',
+        coordinates: [
+          [
+            [lon - 1, lat + 1],
+            [lon + 1, lat + 1],
+            [lon + 1, lat - 1],
+            [lon - 1, lat - 1],
+            [lon - 1, lat + 1]
+          ]
+        ]
+      }
+
+      query.location = {
+        $geoWithin: {
+          $geometry: bbox
+        }
+      }
+    }
+
+    const docs = await Restaurant.find(query)
+      .limit(limit)
+      .skip(limit * page)
     const count = await Restaurant.count(query)
 
     res.status(200).send({
-      items: docs.map(r => r.toJSON()),
-      total: count,
+      items: docs.map(r => r.toDTO()),
+      total: count
     })
   } catch (e) {
     console.error(e)
@@ -55,7 +78,7 @@ exports.findById = async (req, res) => {
       return returnNotFound(req, res)
     }
 
-    res.status(200).send(restaurant.toJSON())
+    res.status(200).send(restaurant.toDTO())
   } catch (err) {
     if (err.name === 'CastError') {
       returnNotFound(req, res)

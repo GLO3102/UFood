@@ -35,7 +35,9 @@ const LOCATIONS = [
 const downloadImg = (photoReference, filename) => {
   return new Promise((resolve, reject) => {
     const url = `https://maps.googleapis.com/maps/api/place/photo?photoreference=${photoReference}&sensor=false&key=${googleApiKey}&maxwidth=1600&maxheight=1600`
-    request(url).pipe(fs.createWriteStream(`${IMAGES_DIR}/${filename}.jpg`)).on('close', resolve)
+    request(url)
+      .pipe(fs.createWriteStream(`${IMAGES_DIR}/${filename}.jpg`))
+      .on('close', resolve)
   })
 }
 
@@ -62,15 +64,17 @@ const loadRestaurants = async () => {
     let requestCount = 0
 
     do {
-      const { data: { results, next_page_token } } = await googleClient.placesNearby({
+      const {
+        data: { results, next_page_token }
+      } = await googleClient.placesNearby({
         params: {
           location,
           radius: 500000,
           key: googleApiKey,
           keyword: 'food',
-          pagetoken: pageToken,
+          pagetoken: pageToken
         },
-        timeout: 10000,
+        timeout: 10000
       })
 
       pageToken = next_page_token
@@ -81,12 +85,14 @@ const loadRestaurants = async () => {
           continue
         }
 
-        const { data: { result: detailsResult } } = await googleClient.placeDetails({
+        const {
+          data: { result: detailsResult }
+        } = await googleClient.placeDetails({
           params: {
             key: googleApiKey,
-            place_id: result.place_id,
+            place_id: result.place_id
           },
-          timeout: 10000,
+          timeout: 10000
         })
 
         if (detailsResult.photos) {
@@ -100,10 +106,7 @@ const loadRestaurants = async () => {
           name: detailsResult.name,
           location: {
             type: 'Point',
-            coordinates: [
-              detailsResult.geometry.location.lng,
-              detailsResult.geometry.location.lat
-            ]
+            coordinates: [detailsResult.geometry.location.lng, detailsResult.geometry.location.lat]
           },
           place_id: detailsResult.place_id,
           tel: detailsResult.formatted_phone_number,
@@ -111,29 +114,42 @@ const loadRestaurants = async () => {
           price_range: detailsResult.price_level,
           rating: detailsResult.rating,
           pictures: (detailsResult.photos || []).map(p => `/${p.filename}.jpg`),
-          opening_hours: !detailsResult.opening_hours ? {} : {
-            sunday: formatOpeningHourPeriod(detailsResult.opening_hours.periods.find(o => o.close && o.close.day === 0)),
-            monday: formatOpeningHourPeriod(detailsResult.opening_hours.periods.find(o => o.close && o.close.day === 1)),
-            tuesday: formatOpeningHourPeriod(detailsResult.opening_hours.periods.find(o => o.close && o.close.day === 2)),
-            wednesday: formatOpeningHourPeriod(detailsResult.opening_hours.periods.find(o => o.close && o.close.day === 3)),
-            thursday: formatOpeningHourPeriod(detailsResult.opening_hours.periods.find(o => o.close && o.close.day === 4)),
-            friday: formatOpeningHourPeriod(detailsResult.opening_hours.periods.find(o => o.close && o.close.day === 5)),
-            saturday: formatOpeningHourPeriod(detailsResult.opening_hours.periods.find(o => o.close && o.close.day === 6)),
-          },
+          opening_hours: !detailsResult.opening_hours
+            ? {}
+            : {
+                sunday: formatOpeningHourPeriod(
+                  detailsResult.opening_hours.periods.find(o => o.close && o.close.day === 0)
+                ),
+                monday: formatOpeningHourPeriod(
+                  detailsResult.opening_hours.periods.find(o => o.close && o.close.day === 1)
+                ),
+                tuesday: formatOpeningHourPeriod(
+                  detailsResult.opening_hours.periods.find(o => o.close && o.close.day === 2)
+                ),
+                wednesday: formatOpeningHourPeriod(
+                  detailsResult.opening_hours.periods.find(o => o.close && o.close.day === 3)
+                ),
+                thursday: formatOpeningHourPeriod(
+                  detailsResult.opening_hours.periods.find(o => o.close && o.close.day === 4)
+                ),
+                friday: formatOpeningHourPeriod(
+                  detailsResult.opening_hours.periods.find(o => o.close && o.close.day === 5)
+                ),
+                saturday: formatOpeningHourPeriod(
+                  detailsResult.opening_hours.periods.find(o => o.close && o.close.day === 6)
+                )
+              }
         })
       }
-    } while (pageToken && (requestCount < MAX_REQUESTS_PER_LOCATION))
+    } while (pageToken && requestCount < MAX_REQUESTS_PER_LOCATION)
   }
 }
 
 try {
-  mongoose.connect(
-    mongoUri,
-    {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    }
-  )
+  mongoose.connect(mongoUri, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  })
 
   loadRestaurants().then(() => {
     mongoose.disconnect()

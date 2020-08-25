@@ -18,7 +18,7 @@ const handleError = (req, res, err) => {
   }
 }
 
-exports.createFavoriteList = async function(req, res) {
+exports.createFavoriteList = async (req, res) => {
   try {
     const user = await User.findById(req.user.id)
     const favoriteList = new FavoriteList({
@@ -33,13 +33,12 @@ exports.createFavoriteList = async function(req, res) {
   }
 }
 
-exports.createFavoriteListUnsecure = async function(req, res) {
+exports.createFavoriteListUnsecure = async (req, res) => {
   try {
     if (!req.body.owner || !req.body.name) {
       return res(400).send({
         errorCode: 'BAD_REQUEST',
-        message:
-          'Missing parameters. Unsecure favorite list must specify a name and an owner.'
+        message: 'Missing parameters. Unsecure favorite list must specify a name and an owner.'
       })
     }
 
@@ -66,7 +65,7 @@ exports.createFavoriteListUnsecure = async function(req, res) {
 exports.addRestaurantToFavoriteList = async (req, res) => {
   try {
     if (!req.body) {
-      return res.status(412).send({
+      return res.status(400).send({
         errorCode: 'REQUEST_BODY_REQUIRED',
         message: 'Request body is missing'
       })
@@ -87,7 +86,7 @@ exports.addRestaurantToFavoriteList = async (req, res) => {
   }
 }
 
-exports.removeRestaurantFromFavoriteList = async function(req, res) {
+exports.removeRestaurantFromFavoriteList = async (req, res) => {
   try {
     const favoriteList = await FavoriteList.findById(req.params.id)
 
@@ -96,8 +95,8 @@ exports.removeRestaurantFromFavoriteList = async function(req, res) {
     }
 
     const restaurantToRemove = favoriteList.restaurants
-    .filter(r =>  r.id === req.params.restaurantId)
-    .pop()
+      .filter(r => r.id === req.params.restaurantId)
+      .pop()
 
     if (!restaurantToRemove) {
       return res.status(404).send({
@@ -140,7 +139,7 @@ exports.removeFavoriteList = async (req, res) => {
     }
 
     if (favoriteList.owner.id !== req.user.id) {
-      return res.status(412).send({
+      return res.status(400).send({
         errorCode: 'NOT_FAVORITE_LIST_OWNER',
         message: 'Favorite list can only be deleted by their owner'
       })
@@ -177,7 +176,9 @@ exports.getFavoriteLists = async (req, res) => {
     const { page } = req.query
     const limit = req.query.limit ? Number(req.query.limit) : 10
 
-    const docs = await FavoriteList.find({}).limit(limit).skip(limit * page)
+    const docs = await FavoriteList.find({})
+      .limit(limit)
+      .skip(limit * page)
     const count = await FavoriteList.count()
 
     const favoriteLists = docs.map(d => d.toJSON())
@@ -211,9 +212,11 @@ exports.findFavoriteListsByUser = async (req, res) => {
     const { page } = req.query
     const limit = req.query.limit ? Number(req.query.limit) : 10
     const userId = req.params.id
-    const query = {'owner.id': userId}
+    const query = { 'owner.id': userId }
 
-    const docs = await FavoriteList.find(query).limit(limit).skip(limit * page)
+    const docs = await FavoriteList.find(query)
+      .limit(limit)
+      .skip(limit * page)
     const count = await FavoriteList.count(query)
 
     const favoriteLists = docs.map(d => d.toJSON())

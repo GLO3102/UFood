@@ -8,7 +8,7 @@
 
 Voir l'énoncé du travail [sur cette page](https://github.com/GLO3102/UFood/blob/master/Enonce.md)
 
-L'API UFood est disponible  sur [https://ufoodapi.herokuapp.com](https://ufoodapi.herokuapp.com/).
+L'API UFood est disponible sur [https://ufoodapi.herokuapp.com](https://ufoodapi.herokuapp.com/).
 
 ### Documentation
 
