@@ -22,13 +22,19 @@
     "request": "^2.88.2"
   },
   "devDependencies": {
+    "babel-cli": "^6.26.0",
     "husky": "^4.2.5",
-    "nodemon": "^2.0.4"
+    "jest": "^26.4.2",
+    "nodemon": "^2.0.4",
+    "superagent": "^6.0.0",
+    "supertest": "^4.0.2"
   },
   "scripts": {
     "start": "node ./index.js",
     "dev": "nodemon ./index.js",
-    "lint": "prettier --config=.prettierrc \"**/*.*\" --write --ignore-unknown"
+    "lint": "prettier --config=.prettierrc \"**/*.*\" --write --ignore-unknown",
+    "test": "jest",
+    "test:watch": "jest --watch"
   },
   "repository": {
     "type": "git",

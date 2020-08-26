@@ -25,7 +25,7 @@ userSchema.add({
   ]
 })
 
-userSchema.methods.toDTO = (following, followers) => {
+userSchema.methods.toDTO = function (following, followers) {
   const obj = this.toJSON()
 
   const dto = {
