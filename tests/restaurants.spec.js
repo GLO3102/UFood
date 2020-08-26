@@ -12,20 +12,23 @@ const testClient = request(app)
 let user
 let accessToken
 
-describe("restaurants", () => {
+describe('restaurants', () => {
   beforeAll(async () => {
     setup()
 
     user = await User.findOne({})
-    accessToken = jwt.encode({ iss: user.id, exp: moment().add(1, 'days').valueOf() }, app.get('jwtTokenSecret'))
+    accessToken = jwt.encode(
+      { iss: user.id, exp: moment().add(1, 'days').valueOf() },
+      app.get('jwtTokenSecret')
+    )
   })
 
   afterAll(async () => {
     teardown()
   })
 
-  describe("GET /unsecure/restaurants", () => {
-    it("returns the list of all restaurants", async () => {
+  describe('GET /unsecure/restaurants', () => {
+    it('returns the list of all restaurants', async () => {
       const res = await testClient.get('/unsecure/restaurants')
 
       const { items, total } = res.body
@@ -55,10 +58,12 @@ describe("restaurants", () => {
     })
   })
 
-  describe("GET /unsecure/restaurants/:id", () => {
-    it("returns the details of the requested restaurant", async () => {
+  describe('GET /unsecure/restaurants/:id', () => {
+    it('returns the details of the requested restaurant', async () => {
       const dbRestaurant = (await Restaurant.findOne({})).toDTO()
-      const { status, body: restaurant } = await testClient.get('/unsecure/restaurants/' + dbRestaurant.id)
+      const { status, body: restaurant } = await testClient.get(
+        '/unsecure/restaurants/' + dbRestaurant.id
+      )
 
       expect(status).toEqual(200)
 
@@ -78,16 +83,16 @@ describe("restaurants", () => {
   })
 
   describe('when user is not logged in', () => {
-    describe("GET /restaurants", () => {
-      it("should return a 401", async () => {
+    describe('GET /restaurants', () => {
+      it('should return a 401', async () => {
         const res = await testClient.get('/restaurants')
 
         expect(res.status).toEqual(401)
       })
     })
 
-    describe("GET /restaurants/:id", () => {
-      it("should return a 401", async () => {
+    describe('GET /restaurants/:id', () => {
+      it('should return a 401', async () => {
         const dbRestaurant = (await Restaurant.findOne({})).toDTO()
         const res = await testClient.get('/restaurants/' + dbRestaurant.id)
 
@@ -97,8 +102,8 @@ describe("restaurants", () => {
   })
 
   describe('when user is logged in', () => {
-    describe("GET /restaurants", () => {
-      it("returns the list of all restaurants", async () => {
+    describe('GET /restaurants', () => {
+      it('returns the list of all restaurants', async () => {
         const res = await testClient.get('/restaurants?access_token=' + accessToken)
 
         const { items, total } = res.body
@@ -126,10 +131,12 @@ describe("restaurants", () => {
       })
     })
 
-    describe("GET /restaurants/:id", () => {
-      it("returns the details of the requested restaurant", async () => {
+    describe('GET /restaurants/:id', () => {
+      it('returns the details of the requested restaurant', async () => {
         const dbRestaurant = (await Restaurant.findOne({})).toDTO()
-        const { status, body: restaurant } = await testClient.get('/restaurants/' + dbRestaurant.id + '?access_token=' + accessToken)
+        const { status, body: restaurant } = await testClient.get(
+          '/restaurants/' + dbRestaurant.id + '?access_token=' + accessToken
+        )
 
         expect(status).toEqual(200)
 
