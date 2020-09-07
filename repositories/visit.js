@@ -18,7 +18,7 @@ visitSchema.methods.toDTO = function () {
     restaurant_id: obj.restaurant_id,
     comment: obj.comment,
     rating: obj.rating,
-    date: obj.date.toString()
+    date: obj.date
   }
 
   return dto

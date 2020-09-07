@@ -11,7 +11,11 @@ const returnNotFound = (req, res) => {
 
 exports.allRestaurants = async (req, res) => {
   try {
-    const { q, page, price_range, genres, lon, lat } = req.query
+    const { q, price_range, genres, page } = req.query
+
+    const lon = req.query.lon ? Number(req.query.lon) : null
+    const lat = req.query.lat ? Number(req.query.lat) : null
+
     const query = {}
     const limit = req.query.limit ? Number(req.query.limit) : 10
 

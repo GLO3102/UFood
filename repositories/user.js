@@ -9,6 +9,7 @@ userSchema.add({
   password: String,
   token: String,
   expiration: Number,
+  rating: { type: Number, default: 0 },
   followers: [
     {
       name: String,
