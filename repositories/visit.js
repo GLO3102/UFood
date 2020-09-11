@@ -10,7 +10,7 @@ visitSchema.add({
   date: Date
 })
 
-visitSchema.methods.toDTO = () => {
+visitSchema.methods.toDTO = function () {
   const obj = this.toJSON()
 
   const dto = {

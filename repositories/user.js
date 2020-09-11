@@ -54,7 +54,7 @@ userSchema.methods.toDTO = function (following, followers) {
   return dto
 }
 
-userSchema.methods.isFollowingUser = userId => {
+userSchema.methods.isFollowingUser = function (userId) {
   for (let i = 0; i < this.following.length; i++) {
     if (this.following[i].id == userId) {
       return true
@@ -63,12 +63,12 @@ userSchema.methods.isFollowingUser = userId => {
   return false
 }
 
-userSchema.methods.unfollow = userId => {
+userSchema.methods.unfollow = function (userId) {
   this.following = this.following.filter(user => user.id !== userId)
   this.save()
 }
 
-userSchema.methods.removeFollower = userId => {
+userSchema.methods.removeFollower = function (userId) {
   this.followers = this.followers.filter(user => user.id !== userId)
   this.save()
 }
@@ -76,7 +76,7 @@ userSchema.methods.removeFollower = userId => {
 userSchema.methods.generateHash = password => {
   return bcrypt.hashSync(password, bcrypt.genSaltSync(8))
 }
-userSchema.methods.validPassword = password => {
+userSchema.methods.validPassword = function (password) {
   return bcrypt.compareSync(password, this.password)
 }
 
