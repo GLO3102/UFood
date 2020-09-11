@@ -36,7 +36,7 @@ exports.createFavoriteList = async (req, res) => {
 exports.createFavoriteListUnsecure = async (req, res) => {
   try {
     if (!req.body.owner || !req.body.name) {
-      return res(400).send({
+      return res.status(400).send({
         errorCode: 'BAD_REQUEST',
         message: 'Missing parameters. Unsecure favorite list must specify a name and an owner.'
       })
