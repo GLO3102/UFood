@@ -12,12 +12,11 @@ const returnNotFound = (req, res) => {
 exports.allRestaurants = async (req, res) => {
   try {
     const { q, price_range, genres, page } = req.query
-
     const lon = req.query.lon ? Number(req.query.lon) : null
     const lat = req.query.lat ? Number(req.query.lat) : null
+    const limit = req.query.limit ? Number(req.query.limit) : 10
 
     const query = {}
-    const limit = req.query.limit ? Number(req.query.limit) : 10
 
     if (price_range != null) {
       query.price_range = {
