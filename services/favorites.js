@@ -9,6 +9,13 @@ const returnNotFound = (req, res) => {
   })
 }
 
+const userNotFound = (req, res) => {
+  return res.status(404).send({
+    errorCode: 'USER_NOT_FOUND',
+    message: 'User with id ' + req.params.id + ' was not found'
+  })
+}
+
 const handleError = (req, res, err) => {
   console.error(err)
   if (err.name === 'CastError') {
@@ -43,19 +50,17 @@ exports.createFavoriteListUnsecure = async (req, res) => {
     }
 
     const user = await User.findOne({ email: req.body.owner })
-    if (user) {
-      const favoriteList = new FavoriteList({
-        name: req.body.name,
-        owner: user.toJSON()
-      })
-      await favoriteList.save()
-      res.status(201).send(favoriteList.toJSON())
-    } else {
-      res.status(404).send({
-        errorCode: 'USER_NOT_FOUND',
-        message: `User with email "${req.body.owner}" does not exist.`
-      })
+    if (!user) {
+      return userNotFound(req, res)
     }
+
+    const favoriteList = new FavoriteList({
+      name: req.body.name,
+      owner: user.toJSON()
+    })
+
+    await favoriteList.save()
+    res.status(201).send(favoriteList.toJSON())
   } catch (err) {
     console.error(err)
     res.status(500)
@@ -79,7 +84,7 @@ exports.addRestaurantToFavoriteList = async (req, res) => {
 
     const restaurant = new Restaurant(req.body)
     favoriteList.restaurants.push(restaurant.toJSON())
-    favoriteList.save()
+    await favoriteList.save()
     res.status(200).send(favoriteList.toJSON())
   } catch (err) {
     handleError(req, res, err)
@@ -105,8 +110,8 @@ exports.removeRestaurantFromFavoriteList = async (req, res) => {
       })
     }
 
-    restaurantToRemove.remove()
-    favoriteList.save()
+    await restaurantToRemove.remove()
+    await favoriteList.save()
     res.status(200).send(favoriteList.toJSON())
   } catch (err) {
     handleError(req, res, err)
@@ -122,8 +127,9 @@ exports.updateFavoriteList = async (req, res) => {
     }
 
     favoriteList.name = req.body.name
-    favoriteList.tracks = req.body.tracks
-    favoriteList.save()
+    favoriteList.restaurants = req.body.restaurants
+
+    await favoriteList.save()
     res.status(200).send(favoriteList.toJSON())
   } catch (err) {
     handleError(req, res, err)
@@ -139,14 +145,15 @@ exports.removeFavoriteList = async (req, res) => {
     }
 
     if (favoriteList.owner.id !== req.user.id) {
-      return res.status(400).send({
+      return res.status(403).send({
         errorCode: 'NOT_FAVORITE_LIST_OWNER',
         message: 'Favorite list can only be deleted by their owner'
       })
     }
 
-    favoriteList.remove()
-    res.status(200).send({
+    await favoriteList.remove()
+
+    return res.status(200).send({
       message: 'Favorite list ' + req.params.id + ' deleted successfully'
     })
   } catch (err) {
@@ -209,9 +216,13 @@ exports.findFavoriteListById = async (req, res) => {
 
 exports.findFavoriteListsByUser = async (req, res) => {
   try {
+    const user = await User.findById(req.params.id)
+    if (!user) {
+      return userNotFound(req, res)
+    }
+
     const { page } = req.query
     const limit = req.query.limit ? Number(req.query.limit) : 10
-    const userId = req.params.id
     const query = { 'owner.id': userId }
 
     const docs = await FavoriteList.find(query)

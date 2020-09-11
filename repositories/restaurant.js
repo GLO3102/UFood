@@ -39,10 +39,7 @@ restaurantSchema.add({
 restaurantSchema.methods.toDTO = function () {
   const dto = this.toJSON()
 
-  dto.location = {
-    lon: dto.location.coordinates[0],
-    lat: dto.location.coordinates[1]
-  }
+  delete dto.location._id
 
   return dto
 }
