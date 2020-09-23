@@ -5,7 +5,7 @@ const Visit = require('../repositories/visit.js').model
 const restaurantNotFound = (req, res) => {
   return res.status(404).send({
     errorCode: 'RESTAURANT_NOT_FOUND',
-    message: 'Restaurant ' + req.body.restaurantId + ' was not found'
+    message: 'Restaurant ' + req.body.restaurant_id + ' was not found'
   })
 }
 
@@ -93,27 +93,27 @@ exports.createVisit = async (req, res) => {
       return userNotFound(req, res)
     }
 
-    if (!req.body.restaurantId || !req.body.rating) {
+    if (!req.body.restaurant_id || !req.body.rating) {
       return res.status(400).send({
         errorCode: 'BAD_REQUEST',
         message: 'Missing parameters. A restaurant ID and a rating must be specified.'
       })
     }
 
-    const restaurant = await Restaurant.findById(req.body.restaurantId)
+    const restaurant = await Restaurant.findById(req.body.restaurant_id)
 
     if (!restaurant) {
       return restaurantNotFound(req, res)
     }
 
     const visit = new Visit({
-      restaurant_id: req.body.restaurantId,
+      restaurant_id: req.body.restaurant_id,
       user_id: req.params.userId,
       comment: req.body.comment,
       rating: req.body.rating,
       date: req.body.date || new Date()
     })
-
+    
     await visit.save()
 
     // Give user 10 points when visiting a restaurant
