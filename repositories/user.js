@@ -32,7 +32,8 @@ userSchema.methods.toDTO = function (following, followers) {
   const dto = {
     id: obj.id.toString(),
     name: obj.name,
-    email: obj.email
+    email: obj.email,
+    rating: obj.rating,
   }
 
   if (following) {
