@@ -15,7 +15,19 @@ favoriteListSchema.add({
   restaurants: [restaurantSchema]
 })
 
-favoriteListSchema.method('toJSON', modelHelpers.toJSON)
+favoriteListSchema.methods.toJSON = function () {
+  const obj = modelHelpers.toJSON.call(this)
+
+  for (restaurant of obj.restaurants) {
+    restaurant.id = restaurant._id.toString()
+    delete restaurant._id
+
+    restaurant.location.id = restaurant.location._id.toString()
+    delete restaurant.location._id
+  }
+
+  return obj
+}
 
 const FavoriteList = mongoose.model('FavoriteList', favoriteListSchema)
 
