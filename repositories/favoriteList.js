@@ -16,7 +16,7 @@ favoriteListSchema.add({
 })
 
 favoriteListSchema.methods.toJSON = function () {
-  const obj = modelHelpers.toJSON()
+  const obj = modelHelpers.toJSON.call(this)
 
   for (restaurant of obj.restaurants) {
     restaurant.id = restaurant._id.toString()
