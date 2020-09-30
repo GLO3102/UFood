@@ -124,7 +124,7 @@ exports.createVisit = async (req, res) => {
 
     // Compute new restaurant rating
     if (visitCount !== 0) {
-      restaurant.rating = ((restaurant.rating * visitCount) + req.body.rating) / (visitCount + 1)
+      restaurant.rating = (restaurant.rating * visitCount + req.body.rating) / (visitCount + 1)
     } else {
       restaurant.rating = req.body.rating
     }

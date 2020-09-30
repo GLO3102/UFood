@@ -22,8 +22,10 @@ favoriteListSchema.methods.toJSON = function () {
     restaurant.id = restaurant._id.toString()
     delete restaurant._id
 
-    restaurant.location.id = restaurant.location._id.toString()
-    delete restaurant.location._id
+    if (restaurant.location) {
+      restaurant.location.id = restaurant.location._id.toString()
+      delete restaurant.location._id
+    }
   }
 
   return obj
