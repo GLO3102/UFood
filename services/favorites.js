@@ -95,12 +95,12 @@ exports.addRestaurantToFavoriteList = async (req, res) => {
 
     const newRestaurant = new Restaurant(req.body)
 
-    favoriteList.restaurants = [
+    favoriteList.restaurants.push(
       {
         ...newRestaurant.toJSON(),
         _id: restaurant.id
       }
-    ]
+    )
 
     await favoriteList.save()
     res.status(200).send(favoriteList.toJSON())
