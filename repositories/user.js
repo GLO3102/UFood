@@ -33,7 +33,7 @@ userSchema.methods.toDTO = function (following, followers) {
     id: obj.id.toString(),
     name: obj.name,
     email: obj.email,
-    rating: obj.rating,
+    rating: obj.rating
   }
 
   if (following) {
