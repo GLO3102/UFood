@@ -9,6 +9,13 @@ const returnNotFound = (req, res) => {
   })
 }
 
+const returnRestaurantNotFound = (req, res) => {
+  res.status(404).send({
+    errorCode: 'RESTAURANT_NOT_FOUND',
+    message: 'Restaurant ' + req.body.id + ' was not found'
+  })
+}
+
 const handleError = (req, res, err) => {
   console.error(err)
   if (err.name === 'CastError') {
@@ -71,15 +78,31 @@ exports.addRestaurantToFavoriteList = async (req, res) => {
       })
     }
 
+    if (!req.body.id) {
+      return returnRestaurantNotFound(req, res)
+    }
+
     const favoriteList = await FavoriteList.findById(req.params.id)
 
     if (!favoriteList) {
       return returnNotFound(req, res)
     }
 
-    const restaurant = new Restaurant(req.body)
-    favoriteList.restaurants.push(restaurant.toJSON())
-    favoriteList.save()
+    const restaurant = await Restaurant.findById(req.body.id)
+    if (!restaurant) {
+      return returnRestaurantNotFound(req, res)
+    }
+
+    const newRestaurant = new Restaurant(req.body)
+
+    favoriteList.restaurants = [
+      {
+        ...newRestaurant.toJSON(),
+        _id: restaurant.id
+      }
+    ]
+
+    await favoriteList.save()
     res.status(200).send(favoriteList.toJSON())
   } catch (err) {
     handleError(req, res, err)
