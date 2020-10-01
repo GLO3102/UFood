@@ -60,6 +60,37 @@ exports.allUserVisits = async (req, res) => {
   }
 }
 
+exports.findByRestaurantId = async (req, res) => {
+  try {
+    const isUserValid = await ensureUser(req, res)
+
+    if (!isUserValid) {
+      return userNotFound(req, res)
+    }
+
+    const { page } = req.query
+    const limit = req.query.limit ? Number(req.query.limit) : 10
+    const query = { user_id: req.params.userId, restaurant_id: req.params.restaurantId }
+
+    const docs = await Visit.find(query)
+      .limit(limit)
+      .skip(limit * page)
+    const count = await Visit.count(query)
+
+    res.status(200).send({
+      items: docs.map(r => r.toJSON()),
+      total: count
+    })
+  } catch (err) {
+    console.error(err)
+    if (err.name === 'CastError') {
+      userNotFound(req, res)
+    } else {
+      res.status(500).send(err)
+    }
+  }
+}
+
 exports.findById = async (req, res) => {
   try {
     const isUserValid = await ensureUser(req, res)
