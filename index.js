@@ -8,11 +8,13 @@ const cors = require('cors')
 const passport = require('passport')
 
 const mongoose = require('mongoose')
-const mongoUri = process.env.DATABASE_URL || 'mongodb://localhost/ufood'
+const mongoUri = process.env.DATABASE_URL || 'mongodb://localhost:27017/ufood'
 mongoose.connect(mongoUri, {
   autoReconnect: true,
   useNewUrlParser: true
 })
+
+connectWithRetry()
 
 const authentication = require('./middleware/authentication')
 const login = require('./services/login')
@@ -85,6 +87,11 @@ app.get('/users/:id', authentication.isAuthenticated, user.findById)
 app.get('/users/:id/favorites', authentication.isAuthenticated, favorites.findFavoriteListsByUser)
 
 app.get('/users/:userId/restaurants/visits', authentication.isAuthenticated, visits.allUserVisits)
+app.get(
+  '/users/:userId/restaurants/:restaurantId/visits',
+  authentication.isAuthenticated,
+  visits.findByRestaurantId
+)
 app.get('/users/:userId/restaurants/visits/:id', authentication.isAuthenticated, visits.findById)
 app.post('/users/:userId/restaurants/visits', authentication.isAuthenticated, visits.createVisit)
 
@@ -116,6 +123,7 @@ app.get('/unsecure/users/:id', user.findById)
 app.get('/unsecure/users/:id/favorites', favorites.findFavoriteListsByUser)
 
 app.get('/unsecure/users/:userId/restaurants/visits', visits.allUserVisits)
+app.get('/unsecure/users/:userId/restaurants/:restaurantId/visits', visits.findByRestaurantId)
 app.get('/unsecure/users/:userId/restaurants/visits/:id', visits.findById)
 app.post('/unsecure/users/:userId/restaurants/visits', visits.createVisit)
 
