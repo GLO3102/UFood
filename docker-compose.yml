@@ -18,6 +18,5 @@ services:
     image: mongo
     ports:
       - 27017:27017
-    # If running docker on windows, put in comments the volume because there is an incompatibility between mongo and windows volumes (you will always get connection refused)
     volumes:
       - ./db:/data/db
