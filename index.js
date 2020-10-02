@@ -14,8 +14,6 @@ mongoose.connect(mongoUri, {
   useNewUrlParser: true
 })
 
-connectWithRetry()
-
 const authentication = require('./middleware/authentication')
 const login = require('./services/login')
 const signup = require('./services/signup')
