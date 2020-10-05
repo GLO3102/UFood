@@ -103,7 +103,6 @@ exports.allRestaurantVisits = async (req, res) => {
       return returnNotFound(req, res)
     }
 
-
     const { page } = req.query
     const limit = req.query.limit ? Number(req.query.limit) : 10
     const query = { restaurant_id: req.params.id }
