@@ -98,6 +98,7 @@ app.delete('/follow/:id', authentication.isAuthenticated, user.unfollow)
 
 app.get('/restaurants', authentication.isAuthenticated, restaurants.allRestaurants)
 app.get('/restaurants/:id', authentication.isAuthenticated, restaurants.findById)
+app.get('/restaurants/:id/visits', authentication.isAuthenticated, restaurants.allRestaurantVisits)
 
 app.get('/favorites', authentication.isAuthenticated, favorites.getFavoriteLists)
 app.get('/favorites/:id', authentication.isAuthenticated, favorites.findFavoriteListById)
@@ -130,6 +131,7 @@ app.delete('/unsecure/follow/:id', user.unfollow)
 
 app.get('/unsecure/restaurants', restaurants.allRestaurants)
 app.get('/unsecure/restaurants/:id', restaurants.findById)
+app.get('/unsecure/restaurants/:id/visits', restaurants.allRestaurantVisits)
 
 app.get('/unsecure/favorites', favorites.getFavoriteLists)
 app.get('/unsecure/favorites/:id', favorites.findFavoriteListById)
