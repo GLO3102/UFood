@@ -8,7 +8,7 @@ const cors = require('cors')
 const passport = require('passport')
 
 const mongoose = require('mongoose')
-const mongoUri = process.env.DATABASE_URL || 'mongodb://localhost/ufood'
+const mongoUri = process.env.DATABASE_URL || 'mongodb://localhost:27017/ufood'
 mongoose.connect(mongoUri, {
   autoReconnect: true,
   useNewUrlParser: true
@@ -85,6 +85,11 @@ app.get('/users/:id', authentication.isAuthenticated, user.findById)
 app.get('/users/:id/favorites', authentication.isAuthenticated, favorites.findFavoriteListsByUser)
 
 app.get('/users/:userId/restaurants/visits', authentication.isAuthenticated, visits.allUserVisits)
+app.get(
+  '/users/:userId/restaurants/:restaurantId/visits',
+  authentication.isAuthenticated,
+  visits.findByRestaurantId
+)
 app.get('/users/:userId/restaurants/visits/:id', authentication.isAuthenticated, visits.findById)
 app.post('/users/:userId/restaurants/visits', authentication.isAuthenticated, visits.createVisit)
 
@@ -93,6 +98,7 @@ app.delete('/follow/:id', authentication.isAuthenticated, user.unfollow)
 
 app.get('/restaurants', authentication.isAuthenticated, restaurants.allRestaurants)
 app.get('/restaurants/:id', authentication.isAuthenticated, restaurants.findById)
+app.get('/restaurants/:id/visits', authentication.isAuthenticated, restaurants.allRestaurantVisits)
 
 app.get('/favorites', authentication.isAuthenticated, favorites.getFavoriteLists)
 app.get('/favorites/:id', authentication.isAuthenticated, favorites.findFavoriteListById)
@@ -116,6 +122,7 @@ app.get('/unsecure/users/:id', user.findById)
 app.get('/unsecure/users/:id/favorites', favorites.findFavoriteListsByUser)
 
 app.get('/unsecure/users/:userId/restaurants/visits', visits.allUserVisits)
+app.get('/unsecure/users/:userId/restaurants/:restaurantId/visits', visits.findByRestaurantId)
 app.get('/unsecure/users/:userId/restaurants/visits/:id', visits.findById)
 app.post('/unsecure/users/:userId/restaurants/visits', visits.createVisit)
 
@@ -124,6 +131,7 @@ app.delete('/unsecure/follow/:id', user.unfollow)
 
 app.get('/unsecure/restaurants', restaurants.allRestaurants)
 app.get('/unsecure/restaurants/:id', restaurants.findById)
+app.get('/unsecure/restaurants/:id/visits', restaurants.allRestaurantVisits)
 
 app.get('/unsecure/favorites', favorites.getFavoriteLists)
 app.get('/unsecure/favorites/:id', favorites.findFavoriteListById)

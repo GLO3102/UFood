@@ -1,4 +1,5 @@
 const Restaurant = require('../repositories/restaurant.js').model
+const Visit = require('../repositories/visit.js').model
 
 const returnNotFound = (req, res) => {
   if (!res.headerSent) {
@@ -90,6 +91,37 @@ exports.findById = async (req, res) => {
       if (!res.headerSent) {
         res.status(500).send(err)
       }
+    }
+  }
+}
+
+exports.allRestaurantVisits = async (req, res) => {
+  try {
+    const restaurant = await Restaurant.findById(req.params.id)
+
+    if (!restaurant) {
+      return returnNotFound(req, res)
+    }
+
+    const { page } = req.query
+    const limit = req.query.limit ? Number(req.query.limit) : 10
+    const query = { restaurant_id: req.params.id }
+
+    const docs = await Visit.find(query)
+      .limit(limit)
+      .skip(limit * page)
+    const count = await Visit.count(query)
+
+    res.status(200).send({
+      items: docs.map(r => r.toJSON()),
+      total: count
+    })
+  } catch (err) {
+    console.error(err)
+    if (err.name === 'CastError') {
+      returnNotFound(req, res)
+    } else {
+      res.status(500).send(err)
     }
   }
 }

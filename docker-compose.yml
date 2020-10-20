@@ -12,7 +12,7 @@ services:
     depends_on:
       - server-database
     environment:
-      - DATABASE_URL=server-database
+      - DATABASE_URL=mongodb://server-database:27017/ufood
       - PORT=8081
   server-database:
     image: mongo
