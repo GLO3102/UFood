@@ -77,6 +77,10 @@ module.exports = function (passport, app) {
               if (user) {
                 return done(null, false)
               } else {
+                if (!req.body.name) {
+                  return done('Name is required')
+                }
+
                 const newUser = new User()
 
                 newUser.name = req.body.name
