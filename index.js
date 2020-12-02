@@ -129,6 +129,7 @@ app.post('/unsecure/users/:userId/restaurants/visits', visits.createVisit)
 
 app.post('/unsecure/follow', user.follow)
 app.delete('/unsecure/follow/:id', user.unfollow)
+app.get('/unsecure/follow/:id', user.findIfFollowed)
 
 app.get('/unsecure/restaurants', restaurants.allRestaurants)
 app.get('/unsecure/restaurants/:id', restaurants.findById)
