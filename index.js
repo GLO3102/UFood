@@ -95,6 +95,7 @@ app.post('/users/:userId/restaurants/visits', authentication.isAuthenticated, vi
 
 app.post('/follow', authentication.isAuthenticated, user.follow)
 app.delete('/follow/:id', authentication.isAuthenticated, user.unfollow)
+app.get('/follow/:id', authentication.isAuthenticated, user.findIfFollowed)
 
 app.get('/restaurants', authentication.isAuthenticated, restaurants.allRestaurants)
 app.get('/restaurants/:id', authentication.isAuthenticated, restaurants.findById)
@@ -128,6 +129,7 @@ app.post('/unsecure/users/:userId/restaurants/visits', visits.createVisit)
 
 app.post('/unsecure/follow', user.follow)
 app.delete('/unsecure/follow/:id', user.unfollow)
+app.get('/unsecure/follow/:id', user.findIfFollowed)
 
 app.get('/unsecure/restaurants', restaurants.allRestaurants)
 app.get('/unsecure/restaurants/:id', restaurants.findById)

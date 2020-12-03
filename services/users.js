@@ -132,3 +132,21 @@ exports.unfollow = async (req, res) => {
     res.send(500)
   }
 }
+
+exports.findIfFollowed = async (req, res) => {
+  try {
+    const user = await User.isFollowingUser(req.params.id)
+
+    if (!user) {
+      return res.status(404).send({
+        errorCode: 'USER_NOT_FOUND',
+        message: 'User does not follow user with id ' + req.body.id
+      })    
+    }
+
+    res.status(200).send(user.toDTO(true, true))
+  } catch (err) {
+      res.status(500).send(err)
+    }
+  }
+}
