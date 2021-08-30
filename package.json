@@ -4,15 +4,15 @@
   "main": "index.js",
   "dependencies": {
     "@googlemaps/google-maps-services-js": "^3.1.6",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "bcryptjs": "^2.4.3",
     "body-parser": "1.19.0",
     "connect-flash": "0.1.1",
-    "cookie-parser": "1.4.4",
+    "cookie-parser": "1.4.5",
     "cors": "^2.8.5",
-    "ejs": "3.0.1",
+    "ejs": "3.1.6",
     "express": "^4.17.1",
-    "express-session": "1.17.0",
+    "express-session": "1.17.2",
     "gravatar": "^1.8.1",
     "jwt-simple": "^0.5.6",
     "moment": "^2.27.0",
@@ -22,13 +22,15 @@
     "request": "^2.88.2"
   },
   "devDependencies": {
-    "husky": "^4.2.5",
+    "husky": "^7.0.2",
+    "lint-staged": "^11.1.2",
     "nodemon": "^2.0.4"
   },
   "scripts": {
     "start": "node ./index.js",
     "dev": "nodemon ./index.js",
-    "lint": "prettier --config=.prettierrc \"**/*.*\" --write --ignore-unknown"
+    "lint": "prettier --config=.prettierrc \"**/*.*\" --write --ignore-unknown",
+    "pre-commit": "lint-staged"
   },
   "repository": {
     "type": "git",
@@ -40,9 +42,7 @@
     "url": "https://github.com/GLO3102/UFood/issues"
   },
   "homepage": "https://github.com/GLO3102/UFood",
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run lint"
-    }
+  "lint-staged": {
+    "**/*.*": "prettier --config=.prettierrc --write --ignore-unknown"
   }
 }

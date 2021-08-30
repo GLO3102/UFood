@@ -67,7 +67,7 @@ exports.follow = async (req, res) => {
     if (req.user.id === req.body.id) {
       return res.status(404).send({
         errorCode: 'CANNOT_FOLLOW_USER',
-        message: 'You cannot follow yourself',
+        message: 'You cannot follow yourself'
       })
     }
 
@@ -141,7 +141,7 @@ exports.findIfFollowed = async (req, res) => {
       return res.status(404).send({
         errorCode: 'USER_NOT_FOUND',
         message: 'User does not follow user with id ' + req.body.id
-      })    
+      })
     }
 
     res.status(200).send(user.toDTO(true, true))
