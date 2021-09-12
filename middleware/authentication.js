@@ -46,6 +46,7 @@ exports.retrieveToken = req => {
   return (
     (req.body && req.body.access_token) ||
     parsedUrl.query.access_token ||
-    req.headers('Authorization')
+    req.headers['authorization'] ||
+    req.headers['Authorization']
   )
 }
