@@ -84,7 +84,7 @@ exports.findByRestaurantId = async (req, res) => {
   } catch (err) {
     console.error(err)
     if (err.name === 'CastError') {
-      userNotFound(req, res)
+      visitNotFound(req, res)
     } else {
       res.status(500).send(err)
     }
@@ -123,20 +123,38 @@ exports.createVisit = async (req, res) => {
     if (!user) {
       return userNotFound(req, res)
     }
-
-    if (!req.body.restaurant_id || !req.body.rating) {
-      return res.status(400).send({
-        errorCode: 'BAD_REQUEST',
-        message: 'Missing parameters. A restaurant ID and a rating must be specified.'
-      })
+  } catch (err) {
+    console.error(err)
+    if (err.name === 'CastError') {
+      userNotFound(req, res)
+    } else {
+      res.status(500).send(err)
     }
+  }
 
+  if (!req.body.restaurant_id || !req.body.rating) {
+    return res.status(400).send({
+      errorCode: 'BAD_REQUEST',
+      message: 'Missing parameters. A restaurant ID and a rating must be specified.'
+    })
+  }
+
+  try {
     const restaurant = await Restaurant.findById(req.body.restaurant_id)
 
     if (!restaurant) {
       return restaurantNotFound(req, res)
     }
+  } catch (err) {
+    console.error(err)
+    if (err.name === 'CastError') {
+      restaurantNotFound(req, res)
+    } else {
+      res.status(500).send(err)
+    }
+  }
 
+  try {
     const visit = new Visit({
       restaurant_id: req.body.restaurant_id,
       user_id: req.params.userId,
@@ -171,10 +189,6 @@ exports.createVisit = async (req, res) => {
     res.status(201).send(visit.toDTO())
   } catch (err) {
     console.error(err)
-    if (err.name === 'CastError') {
-      userNotFound(req, res)
-    } else {
-      res.status(500).send(err)
-    }
+    res.status(500).send(err)
   }
 }
