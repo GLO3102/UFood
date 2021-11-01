@@ -117,8 +117,9 @@ exports.findById = async (req, res) => {
 }
 
 exports.createVisit = async (req, res) => {
+  let user
   try {
-    const user = await User.findById(req.params.userId)
+    user = await User.findById(req.params.userId)
 
     if (!user) {
       return userNotFound(req, res)
