@@ -117,7 +117,7 @@ exports.findById = async (req, res) => {
 }
 
 exports.createVisit = async (req, res) => {
-  let user
+  let restaurant, user
   try {
     user = await User.findById(req.params.userId)
 
@@ -141,7 +141,7 @@ exports.createVisit = async (req, res) => {
   }
 
   try {
-    const restaurant = await Restaurant.findById(req.body.restaurant_id)
+    restaurant = await Restaurant.findById(req.body.restaurant_id)
 
     if (!restaurant) {
       return restaurantNotFound(req, res)
