@@ -12,7 +12,7 @@ Le projet de session consiste à développer une application permettant de trouv
 - Les formats d'écrans utilisés pour la correction seront
   - Desktop
   - iPad
-  - Pixel 2
+  - iPhone
 - Tous les frameworks CSS et JS sont permis - en cas de doute vérifiez avec l'enseignant.
 - Si vous désirez réaliser le projet de session avec un autre framework que Vue (React, Angular etc.) - veuillez communiquer avec l'enseignant avant de commencer.
 
