@@ -10,7 +10,6 @@ const passport = require('passport')
 const mongoose = require('mongoose')
 const mongoUri = process.env.DATABASE_URL || 'mongodb://localhost:27017/ufood'
 mongoose.connect(mongoUri, {
-  autoReconnect: true,
   useNewUrlParser: true
 })
 
