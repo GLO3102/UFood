@@ -3,21 +3,21 @@ const User = require('../repositories/user.js').model
 const Visit = require('../repositories/visit.js').model
 
 const restaurantNotFound = (req, res) => {
-  return res.status(404).send({
+  res.status(404).send({
     errorCode: 'RESTAURANT_NOT_FOUND',
     message: 'Restaurant ' + req.body.restaurant_id + ' was not found'
   })
 }
 
 const userNotFound = (req, res) => {
-  return res.status(404).send({
+  res.status(404).send({
     errorCode: 'USER_NOT_FOUND',
     message: 'User ' + req.params.userId + ' was not found'
   })
 }
 
 const visitNotFound = (req, res) => {
-  return res.status(404).send({
+  res.status(404).send({
     errorCode: 'VISIT_NOT_FOUND',
     message: 'Visit ' + req.params.id + ' was not found'
   })
