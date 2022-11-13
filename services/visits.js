@@ -127,9 +127,9 @@ exports.createVisit = async (req, res) => {
   } catch (err) {
     console.error(err)
     if (err.name === 'CastError') {
-      userNotFound(req, res)
+      return userNotFound(req, res)
     } else {
-      res.status(500).send(err)
+      return res.status(500).send(err)
     }
   }
 
