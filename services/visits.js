@@ -128,6 +128,7 @@ exports.createVisit = async (req, res) => {
     console.error(err)
     if (err.name === 'CastError') {
       userNotFound(req, res)
+      return
     } else {
       res.status(500).send(err)
     }
@@ -150,6 +151,7 @@ exports.createVisit = async (req, res) => {
     console.error(err)
     if (err.name === 'CastError') {
       restaurantNotFound(req, res)
+      return
     } else {
       res.status(500).send(err)
     }
