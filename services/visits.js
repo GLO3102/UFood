@@ -149,9 +149,9 @@ exports.createVisit = async (req, res) => {
   } catch (err) {
     console.error(err)
     if (err.name === 'CastError') {
-      restaurantNotFound(req, res)
+      return restaurantNotFound(req, res)
     } else {
-      res.status(500).send(err)
+      return res.status(500).send(err)
     }
   }
 
