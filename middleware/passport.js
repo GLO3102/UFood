@@ -33,7 +33,7 @@ module.exports = function (passport, app) {
             if (!user || !user.validPassword(password)) {
               return done(null, false)
             } else {
-              const expires = moment().add(1, 'days').valueOf()
+              const expires = moment().add(1, 'days').unix()
               user.token = jwt.encode(
                 {
                   iss: user.id,
