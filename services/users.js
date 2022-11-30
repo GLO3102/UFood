@@ -135,7 +135,7 @@ exports.unfollow = async (req, res) => {
 
 exports.findIfFollowed = async (req, res) => {
   try {
-    const user = await User.isFollowingUser(req.params.id)
+    const user = await req.user.isFollowingUser(req.params.id)
 
     if (!user) {
       return res.status(404).send({
