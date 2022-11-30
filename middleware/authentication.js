@@ -6,16 +6,17 @@ exports.isAuthenticated = async (req, res, next) => {
   const token = exports.retrieveToken(req)
 
   if (token) {
+    let decoded = null;
+
     try {
-      const decoded = jwt.decode(token, 'UFOOD_TOKEN_SECRET')
-
-      if (decoded.exp <= Date.now()) {
-        return res.status(401).send({
-          errorCode: 'ACCESS_DENIED',
-          message: 'Access token is expired'
-        })
-      }
-
+      decoded = jwt.decode(token, 'UFOOD_TOKEN_SECRET')
+    } catch (err) {
+      return res.status(401).send({
+        errorCode: 'ACCESS_DENIED',
+        message: err.toString()
+      })
+    }
+    try {
       const user = await UserModel.findOne({ _id: decoded.iss })
       if (user) {
         req.user = user
