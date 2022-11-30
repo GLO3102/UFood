@@ -126,10 +126,6 @@ app.get('/unsecure/users/:userId/restaurants/:restaurantId/visits', visits.findB
 app.get('/unsecure/users/:userId/restaurants/visits/:id', visits.findById)
 app.post('/unsecure/users/:userId/restaurants/visits', visits.createVisit)
 
-app.post('/unsecure/follow', user.follow)
-app.delete('/unsecure/follow/:id', user.unfollow)
-app.get('/unsecure/follow/:id', user.findIfFollowed)
-
 app.get('/unsecure/restaurants', restaurants.allRestaurants)
 app.get('/unsecure/restaurants/:id', restaurants.findById)
 app.get('/unsecure/restaurants/:id/visits', restaurants.allRestaurantVisits)
