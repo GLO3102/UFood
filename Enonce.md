@@ -58,8 +58,8 @@ Le livrable 1 consiste en définir le _design_ de votre application et choisir l
   - Nom du restaurant
   - Adresse
   - Numéro de téléphone
-  - Position géographique sur la carte
-  - Bouton pour directions vers le restaurant
+  - Position géographique sur la carte **FONCTIONNEL**
+  - Bouton pour directions vers le restaurant **FONCTIONNEL**
   - Heures d'ouverture
   - Photos du restaurant
   - Genre(s) associé(s) au restaurant
