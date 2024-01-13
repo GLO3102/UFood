@@ -4,27 +4,26 @@
   "main": "index.js",
   "dependencies": {
     "@googlemaps/google-maps-services-js": "^3.1.6",
-    "axios": "^0.27.2",
     "bcryptjs": "^2.4.3",
-    "body-parser": "1.20.0",
+    "body-parser": "1.20.2",
     "connect-flash": "0.1.1",
     "cookie-parser": "1.4.6",
     "cors": "^2.8.5",
-    "ejs": "3.1.8",
+    "ejs": "3.1.9",
     "express": "^4.17.1",
     "express-session": "1.17.3",
     "gravatar": "^1.8.1",
     "jwt-simple": "^0.5.6",
     "moment": "^2.27.0",
-    "mongoose": "^6.5.1",
-    "passport": "0.6.0",
+    "mongoose": "^8.0.4",
+    "passport": "0.7.0",
     "passport-local": "1.0.0",
     "request": "^2.88.2"
   },
   "devDependencies": {
     "husky": "^8.0.1",
-    "lint-staged": "^13.0.3",
-    "nodemon": "^2.0.4"
+    "lint-staged": "^15.2.0",
+    "nodemon": "^3.0.2"
   },
   "scripts": {
     "start": "node ./index.js",

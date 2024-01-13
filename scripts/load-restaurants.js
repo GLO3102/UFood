@@ -147,7 +147,6 @@ const loadRestaurants = async () => {
 
 try {
   mongoose.connect(mongoUri, {
-    useNewUrlParser: true,
     useUnifiedTopology: true
   })
 

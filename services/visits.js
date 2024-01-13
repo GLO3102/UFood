@@ -44,7 +44,7 @@ exports.allUserVisits = async (req, res) => {
     const docs = await Visit.find(query)
       .limit(limit)
       .skip(limit * page)
-    const count = await Visit.count(query)
+    const count = await Visit.countDocuments(query)
 
     res.status(200).send({
       items: docs.map(r => r.toJSON()),
@@ -75,7 +75,7 @@ exports.findByRestaurantId = async (req, res) => {
     const docs = await Visit.find(query)
       .limit(limit)
       .skip(limit * page)
-    const count = await Visit.count(query)
+    const count = await Visit.countDocuments(query)
 
     res.status(200).send({
       items: docs.map(r => r.toJSON()),
@@ -170,7 +170,7 @@ exports.createVisit = async (req, res) => {
     user.rating = user.rating + 10
     await user.save()
 
-    const visitCount = await Visit.count({ restaurant_id: req.body.restaurant_id })
+    const visitCount = await Visit.countDocuments({ restaurant_id: req.body.restaurant_id })
 
     // Compute new restaurant rating
     if (visitCount !== 0) {

@@ -25,7 +25,7 @@ exports.allUsers = async (req, res) => {
       .limit(limit)
       .skip(limit * page)
       .sort('name')
-    const count = await User.count(query)
+    const count = await User.countDocuments(query)
 
     const users = docs.map(d => d.toDTO())
 

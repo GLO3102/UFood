@@ -8,10 +8,9 @@ const cors = require('cors')
 const passport = require('passport')
 
 const mongoose = require('mongoose')
+console.log(process.env.DATABASE_URL)
 const mongoUri = process.env.DATABASE_URL || 'mongodb://localhost:27017/ufood'
-mongoose.connect(mongoUri, {
-  useNewUrlParser: true
-})
+mongoose.connect(mongoUri)
 
 const authentication = require('./middleware/authentication')
 const login = require('./services/login')

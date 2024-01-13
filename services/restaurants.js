@@ -62,7 +62,7 @@ exports.allRestaurants = async (req, res) => {
     const docs = await Restaurant.find(query)
       .limit(limit)
       .skip(limit * page)
-    const count = await Restaurant.count(query)
+    const count = await Restaurant.countDocuments(query)
 
     res.status(200).send({
       items: docs.map(r => r.toDTO()),
@@ -110,7 +110,7 @@ exports.allRestaurantVisits = async (req, res) => {
     const docs = await Visit.find(query)
       .limit(limit)
       .skip(limit * page)
-    const count = await Visit.count(query)
+    const count = await Visit.countDocuments(query)
 
     res.status(200).send({
       items: docs.map(r => r.toJSON()),
