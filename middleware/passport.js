@@ -42,12 +42,12 @@ module.exports = function (passport, app) {
                 app.get('jwtTokenSecret')
               )
 
-              user.save(function (err) {
-                if (err) {
-                  return done(err)
-                }
+              try {
+                await user.save()
                 return done(null, user)
-              })
+              } catch(err) {
+                return done(err)
+              }
             }
           } catch (err) {
             return done(err)
@@ -87,13 +87,12 @@ module.exports = function (passport, app) {
                 newUser.email = email
                 newUser.password = newUser.generateHash(password)
 
-                newUser.save(function (err) {
-                  if (err) {
-                    return done(err)
-                  }
-
+                try {
+                  await newUser.save()
                   return done(null, newUser)
-                })
+                } catch(err) {
+                  return done(err)
+                }
               }
             } catch (err) {
               return done(err)
