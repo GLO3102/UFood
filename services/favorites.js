@@ -166,7 +166,7 @@ exports.removeFavoriteList = async (req, res) => {
       })
     }
 
-    await FavoriteList.deleteOne({ id: req.params.id })
+    await FavoriteList.deleteOne({ _id: req.params.id })
     res.status(200).send({
       message: 'Favorite list ' + req.params.id + ' deleted successfully'
     })
@@ -183,7 +183,7 @@ exports.removeFavoriteListUnsecure = async (req, res) => {
       return returnNotFound(req, res)
     }
 
-    await FavoriteList.deleteOne({ id: req.params.id })
+    await FavoriteList.deleteOne({ _id: req.params.id })
     res.status(200).send({
       message: 'Favorite list ' + req.params.id + ' deleted successfully'
     })
