@@ -126,7 +126,6 @@ exports.removeRestaurantFromFavoriteList = async (req, res) => {
       })
     }
 
-    restaurantToRemove.remove()
     favoriteList.save()
     res.status(200).send(favoriteList.toJSON())
   } catch (err) {
