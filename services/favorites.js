@@ -126,6 +126,7 @@ exports.removeRestaurantFromFavoriteList = async (req, res) => {
       })
     }
 
+    favoriteList.restaurants = favoriteList.restaurants.filter(r => r.id !== req.params.restaurantId)
     favoriteList.save()
     res.status(200).send(favoriteList.toJSON())
   } catch (err) {
