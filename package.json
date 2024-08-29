@@ -1,5 +1,5 @@
 {
-  "name": "UFood",
+  "name": "ufood",
   "version": "0.1.0",
   "main": "index.js",
   "dependencies": {
@@ -9,9 +9,9 @@
     "connect-flash": "0.1.1",
     "cookie-parser": "1.4.6",
     "cors": "^2.8.5",
-    "ejs": "3.1.9",
+    "ejs": "3.1.10",
     "express": "^4.17.1",
-    "express-session": "1.17.3",
+    "express-session": "1.18.0",
     "gravatar": "^1.8.1",
     "jwt-simple": "^0.5.6",
     "moment": "^2.27.0",
@@ -21,7 +21,7 @@
     "request": "^2.88.2"
   },
   "devDependencies": {
-    "husky": "^8.0.1",
+    "husky": "^9.1.5",
     "lint-staged": "^15.2.0",
     "nodemon": "^3.0.2"
   },

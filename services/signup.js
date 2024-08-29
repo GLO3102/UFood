@@ -1,10 +1,5 @@
 const passport = require('passport')
 
-exports.showSignupPage = (req, res) => {
-  res.render('signup.ejs', { message: req.flash('signupMessage') })
-  req.session.destroy()
-}
-
 exports.passportSignup = passport.authenticate('local-signup', {
   successRedirect: '/token',
   failureRedirect: '/login',

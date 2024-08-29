@@ -2,11 +2,6 @@ const passport = require('passport')
 
 const authentication = require('../middleware/authentication')
 
-exports.showLoginPage = (req, res) => {
-  res.render('login.ejs', { message: req.flash('loginMessage') })
-  req.session.destroy()
-}
-
 exports.passportLogin = passport.authenticate('local-login', {
   successRedirect: '/token',
   failureRedirect: '/login',
