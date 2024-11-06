@@ -30,8 +30,6 @@ const corsOptions = {
 
 const tokenSecret = 'UFOOD_TOKEN_SECRET' || process.env.TOKEN_SECRET
 
-app.set('views', __dirname + '/views')
-app.set('view engine', 'ejs')
 app.set('jwtTokenSecret', tokenSecret)
 
 require('./middleware/passport')(passport, app)
@@ -50,7 +48,6 @@ app.use(passport.initialize())
 app.use(passport.session())
 app.use(flash())
 app.use(cors(corsOptions))
-app.use(express.static(__dirname + '/public'))
 
 app.use(function (error, req, res, next) {
   if (error instanceof SyntaxError) {
