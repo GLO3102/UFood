@@ -28,7 +28,7 @@ const corsOptions = {
   credentials: true
 }
 
-const tokenSecret = 'UFOOD_TOKEN_SECRET' || process.env.TOKEN_SECRET
+const tokenSecret = process.env.TOKEN_SECRET || 'UFOOD_TOKEN_SECRET'
 
 app.set('jwtTokenSecret', tokenSecret)
 
