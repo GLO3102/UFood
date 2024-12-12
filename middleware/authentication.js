@@ -9,7 +9,8 @@ exports.isAuthenticated = async (req, res, next) => {
     let decoded = null;
 
     try {
-      decoded = jwt.decode(token, 'UFOOD_TOKEN_SECRET')
+      const tokenSecret = process.env.TOKEN_SECRET || 'UFOOD_TOKEN_SECRET'
+      decoded = jwt.decode(token, tockenSecret)
     } catch (err) {
       return res.status(401).send({
         errorCode: 'ACCESS_DENIED',
