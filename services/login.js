@@ -23,6 +23,6 @@ export const getToken = (req, res) => {
 export const logout = (req, res) => {
   req.session.destroy()
   req.logout(() => {
-    res.status(200).send();
-  });
+    res.status(200).send()
+  })
 }

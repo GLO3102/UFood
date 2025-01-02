@@ -20,7 +20,8 @@
     "@googlemaps/google-maps-services-js": "^3.1.6",
     "husky": "^9.1.5",
     "lint-staged": "^15.2.0",
-    "nodemon": "^3.0.2"
+    "nodemon": "^3.0.2",
+    "prettier": "^3.4.2"
   },
   "scripts": {
     "start": "node ./index.js",

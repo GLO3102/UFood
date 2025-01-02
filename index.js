@@ -16,8 +16,24 @@ import { welcome } from './services/signup.js'
 import { allUsers, findUserById, follow, unfollow, findIfFollowed } from './services/users.js'
 import { getHome, getStatus } from './services/status.js'
 import { allRestaurants, findRestaurantById, allRestaurantVisits } from './services/restaurants.js'
-import { createFavoriteList, createFavoriteListUnsecure, addRestaurantToFavoriteList, removeRestaurantFromFavoriteList, updateFavoriteList, removeFavoriteList, removeFavoriteListUnsecure, getFavoriteLists, findFavoriteListById, findFavoriteListsByUser  } from './services/favorites.js'
-import { allUserVisits, findVisitByRestaurantId, findVisitById, createVisit } from './services/visits.js'
+import {
+  createFavoriteList,
+  createFavoriteListUnsecure,
+  addRestaurantToFavoriteList,
+  removeRestaurantFromFavoriteList,
+  updateFavoriteList,
+  removeFavoriteList,
+  removeFavoriteListUnsecure,
+  getFavoriteLists,
+  findFavoriteListById,
+  findFavoriteListsByUser
+} from './services/favorites.js'
+import {
+  allUserVisits,
+  findVisitByRestaurantId,
+  findVisitById,
+  createVisit
+} from './services/visits.js'
 
 import { initializePassport } from './middleware/passport.js'
 
@@ -76,11 +92,7 @@ app.get('/users/:id', isAuthenticated, findUserById)
 app.get('/users/:id/favorites', isAuthenticated, findFavoriteListsByUser)
 
 app.get('/users/:userId/restaurants/visits', isAuthenticated, allUserVisits)
-app.get(
-  '/users/:userId/restaurants/:restaurantId/visits',
-  isAuthenticated,
-  findVisitByRestaurantId
-)
+app.get('/users/:userId/restaurants/:restaurantId/visits', isAuthenticated, findVisitByRestaurantId)
 app.get('/users/:userId/restaurants/visits/:id', isAuthenticated, findVisitById)
 app.post('/users/:userId/restaurants/visits', isAuthenticated, createVisit)
 
@@ -97,11 +109,7 @@ app.get('/favorites/:id', isAuthenticated, findFavoriteListById)
 app.post('/favorites', isAuthenticated, createFavoriteList)
 app.put('/favorites/:id', isAuthenticated, updateFavoriteList)
 app.delete('/favorites/:id', isAuthenticated, removeFavoriteList)
-app.post(
-  '/favorites/:id/restaurants',
-  isAuthenticated,
-  addRestaurantToFavoriteList
-)
+app.post('/favorites/:id/restaurants', isAuthenticated, addRestaurantToFavoriteList)
 app.delete(
   '/favorites/:id/restaurants/:restaurantId',
   isAuthenticated,
@@ -128,10 +136,7 @@ app.post('/unsecure/favorites', createFavoriteListUnsecure)
 app.put('/unsecure/favorites/:id', updateFavoriteList)
 app.delete('/unsecure/favorites/:id', removeFavoriteListUnsecure)
 app.post('/unsecure/favorites/:id/restaurants', addRestaurantToFavoriteList)
-app.delete(
-  '/unsecure/favorites/:id/restaurants/:restaurantId',
-  removeRestaurantFromFavoriteList
-)
+app.delete('/unsecure/favorites/:id/restaurants/:restaurantId', removeRestaurantFromFavoriteList)
 
 const port = process.env.PORT || 3000
 app.listen(port)

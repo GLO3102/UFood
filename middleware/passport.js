@@ -45,7 +45,7 @@ export const initializePassport = (passport, app) => {
               try {
                 await user.save()
                 return done(null, user)
-              } catch(err) {
+              } catch (err) {
                 return done(err)
               }
             }
@@ -90,7 +90,7 @@ export const initializePassport = (passport, app) => {
                 try {
                   await newUser.save()
                   return done(null, newUser)
-                } catch(err) {
+                } catch (err) {
                   return done(err)
                 }
               }
