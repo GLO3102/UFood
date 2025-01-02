@@ -84,7 +84,7 @@ Le livrable 2 consiste en l'intégration des fonctionnalités du livrable 1 avec
 - Le livrable 2 utilisera la version non sécurisée de l'API.
 - Tous les formulaires doivent être validés via JavaScript **avant** d’être soumis au serveur.
 
-### Fonctionalités demandées
+### Fonctionnalités demandées
 
 - Page d'accueil:
   - Intégrer la page complètement avec l'API
@@ -123,7 +123,7 @@ Le livrable 3 consiste en l'intégration de l'authentification ainsi que l'ajout
 - Le livrable 3 utilisera la version sécurisée de l'API.
 - Tous les formulaires doivent être validés via JavaScript **avant** d’être soumis au serveur.
 
-### Fonctionalités demandées
+### Fonctionnalités demandées
 
 - Modifier le menu afin de supporter les états usager connecté/non connecté.
 - Ajouter une page d'authentification
@@ -149,14 +149,14 @@ Le livrable 3 consiste en l'intégration de l'authentification ainsi que l'ajout
   - L'application permet de supporter un login externe: Google, Facebook etc.
   - Montrer le _feed_ Instagram du restaurant si applicable
   - Obtenir des suggestions de restaurants similaires au restaurant courant
-  - Une fonctionalité de votre choix
-    - Cette fonctionalité doit être approuvée par l'enseignant du cours.
+  - Une fonctionnalité de votre choix
+    - Cette fonctionnalité doit être approuvée par l'enseignant du cours.
 - Document design
   - Expliquer comment lancer l’application
   - Donner des détails sur comment voir chacune des pages
     - urls
     - boutons à cliquer
     - facilitez la vie des correcteurs!
-  - Expliquer vos 2 fonctionalités avancées et comment les voir en action
+  - Expliquer vos 2 fonctionnalités avancées et comment les voir en action
 
 Bonne chance!
