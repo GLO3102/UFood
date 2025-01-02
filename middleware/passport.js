@@ -1,9 +1,9 @@
-const LocalStrategy = require('passport-local').Strategy
-const User = require('../repositories/user').model
-const moment = require('moment')
-const jwt = require('jwt-simple')
+import { Strategy as LocalStrategy } from 'passport-local'
+import { User } from '../repositories/user.js'
+import moment from 'moment'
+import jwt from 'jwt-simple'
 
-module.exports = function (passport, app) {
+export const initializePassport = (passport, app) => {
   passport.serializeUser(function (user, done) {
     done(null, user.id)
   })

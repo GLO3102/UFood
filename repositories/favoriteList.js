@@ -1,10 +1,8 @@
-const mongoose = require('mongoose')
-const Schema = mongoose.Schema
-const modelHelpers = require('./modelHelpers.js')
+import mongoose from 'mongoose'
+import { toJSON } from './modelHelpers.js'
+import { schema as restaurantSchema } from './restaurant.js'
 
-const restaurantSchema = require('./restaurant').schema
-
-const favoriteListSchema = new Schema()
+const favoriteListSchema = new mongoose.Schema()
 favoriteListSchema.add({
   name: String,
   owner: {
@@ -16,7 +14,7 @@ favoriteListSchema.add({
 })
 
 favoriteListSchema.methods.toJSON = function () {
-  const obj = modelHelpers.toJSON.call(this)
+  const obj = toJSON.call(this)
 
   obj.restaurants = obj.restaurants.map(r => {
     return { id: r._id }
@@ -27,5 +25,4 @@ favoriteListSchema.methods.toJSON = function () {
 
 const FavoriteList = mongoose.model('FavoriteList', favoriteListSchema)
 
-exports.schema = favoriteListSchema
-exports.model = FavoriteList
+export { favoriteListSchema as schema, FavoriteList }

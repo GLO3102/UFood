@@ -1,6 +1,6 @@
-const FavoriteList = require('../repositories/favoriteList').model
-const User = require('../repositories/user').model
-const Restaurant = require('../repositories/restaurant').model
+import { FavoriteList } from '../repositories/favoriteList.js'
+import { User } from '../repositories/user.js'
+import { Restaurant } from '../repositories/restaurant.js'
 
 const returnNotFound = (req, res) => {
   res.status(404).send({
@@ -25,7 +25,7 @@ const handleError = (req, res, err) => {
   }
 }
 
-exports.createFavoriteList = async (req, res) => {
+export const createFavoriteList = async (req, res) => {
   try {
     const user = await User.findById(req.user.id)
     const favoriteList = new FavoriteList({
@@ -35,12 +35,11 @@ exports.createFavoriteList = async (req, res) => {
     await favoriteList.save()
     res.status(201).send(favoriteList.toJSON())
   } catch (err) {
-    console.error(err)
-    res.status(500)
+    handleError(req, res, err)
   }
 }
 
-exports.createFavoriteListUnsecure = async (req, res) => {
+export const createFavoriteListUnsecure = async (req, res) => {
   try {
     if (!req.body.owner || !req.body.name) {
       return res.status(400).send({
@@ -64,12 +63,11 @@ exports.createFavoriteListUnsecure = async (req, res) => {
       })
     }
   } catch (err) {
-    console.error(err)
-    res.status(500)
+    handleError(req, res, err)
   }
 }
 
-exports.addRestaurantToFavoriteList = async (req, res) => {
+export const addRestaurantToFavoriteList = async (req, res) => {
   try {
     if (!req.body) {
       return res.status(400).send({
@@ -107,7 +105,7 @@ exports.addRestaurantToFavoriteList = async (req, res) => {
   }
 }
 
-exports.removeRestaurantFromFavoriteList = async (req, res) => {
+export const removeRestaurantFromFavoriteList = async (req, res) => {
   try {
     const favoriteList = await FavoriteList.findById(req.params.id)
 
@@ -134,7 +132,7 @@ exports.removeRestaurantFromFavoriteList = async (req, res) => {
   }
 }
 
-exports.updateFavoriteList = async (req, res) => {
+export const updateFavoriteList = async (req, res) => {
   try {
     const favoriteList = await FavoriteList.findById(req.params.id)
 
@@ -151,7 +149,7 @@ exports.updateFavoriteList = async (req, res) => {
   }
 }
 
-exports.removeFavoriteList = async (req, res) => {
+export const removeFavoriteList = async (req, res) => {
   try {
     const favoriteList = await FavoriteList.findById(req.params.id)
 
@@ -175,7 +173,7 @@ exports.removeFavoriteList = async (req, res) => {
   }
 }
 
-exports.removeFavoriteListUnsecure = async (req, res) => {
+export const removeFavoriteListUnsecure = async (req, res) => {
   try {
     const favoriteList = await FavoriteList.findById(req.params.id)
 
@@ -192,7 +190,7 @@ exports.removeFavoriteListUnsecure = async (req, res) => {
   }
 }
 
-exports.getFavoriteLists = async (req, res) => {
+export const getFavoriteLists = async (req, res) => {
   try {
     const { page } = req.query
     const limit = req.query.limit ? Number(req.query.limit) : 10
@@ -209,12 +207,11 @@ exports.getFavoriteLists = async (req, res) => {
       total: count
     })
   } catch (err) {
-    console.log(err)
-    res.status(500).send(err)
+    handleError(req, res, err)
   }
 }
 
-exports.findFavoriteListById = async (req, res) => {
+export const findFavoriteListById = async (req, res) => {
   try {
     const favoriteList = await FavoriteList.findById(req.params.id)
 
@@ -228,7 +225,7 @@ exports.findFavoriteListById = async (req, res) => {
   }
 }
 
-exports.findFavoriteListsByUser = async (req, res) => {
+export const findFavoriteListsByUser = async (req, res) => {
   try {
     const { page } = req.query
     const limit = req.query.limit ? Number(req.query.limit) : 10
@@ -247,6 +244,6 @@ exports.findFavoriteListsByUser = async (req, res) => {
       total: count
     })
   } catch (err) {
-    res.status(500).send(err)
+    handleError(req, res, err)
   }
 }

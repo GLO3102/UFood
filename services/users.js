@@ -1,4 +1,4 @@
-const User = require('../repositories/user.js').model
+import { User } from '../repositories/user.js'
 
 const returnNotFound = (req, res) => {
   if (!res.headerSent) {
@@ -9,7 +9,7 @@ const returnNotFound = (req, res) => {
   }
 }
 
-exports.allUsers = async (req, res) => {
+export const allUsers = async (req, res) => {
   try {
     const { page, q } = req.query
     const limit = req.query.limit ? Number(req.query.limit) : 10
@@ -39,7 +39,7 @@ exports.allUsers = async (req, res) => {
   }
 }
 
-exports.findById = async (req, res) => {
+export const findUserById = async (req, res) => {
   try {
     const user = await User.findById(req.params.id)
 
@@ -62,7 +62,7 @@ exports.findById = async (req, res) => {
   }
 }
 
-exports.follow = async (req, res) => {
+export const follow = async (req, res) => {
   try {
     if (req.user.id === req.body.id) {
       return res.status(404).send({
@@ -108,7 +108,7 @@ exports.follow = async (req, res) => {
   }
 }
 
-exports.unfollow = async (req, res) => {
+export const unfollow = async (req, res) => {
   try {
     const userId = req.params.id
 
@@ -133,7 +133,7 @@ exports.unfollow = async (req, res) => {
   }
 }
 
-exports.findIfFollowed = async (req, res) => {
+export const findIfFollowed = async (req, res) => {
   try {
     const user = await req.user.isFollowingUser(req.params.id)
 

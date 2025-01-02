@@ -1,6 +1,6 @@
-const mongoose = require('mongoose')
-const bcrypt = require('bcryptjs')
-const modelHelpers = require('./modelHelpers.js')
+import mongoose from 'mongoose'
+import bcrypt from 'bcryptjs'
+import { toJSON } from './modelHelpers.js'
 
 const userSchema = new mongoose.Schema()
 userSchema.add({
@@ -81,9 +81,8 @@ userSchema.methods.validPassword = function (password) {
   return bcrypt.compareSync(password, this.password)
 }
 
-userSchema.method('toJSON', modelHelpers.toJSON)
+userSchema.method('toJSON', toJSON)
 
 const User = mongoose.model('User', userSchema)
 
-exports.schema = userSchema
-exports.model = User
+export { userSchema as schema, User }

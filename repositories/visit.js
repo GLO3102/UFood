@@ -1,5 +1,5 @@
-const mongoose = require('mongoose')
-const modelHelpers = require('./modelHelpers.js')
+import mongoose from 'mongoose'
+import { toJSON } from './modelHelpers.js'
 
 const visitSchema = new mongoose.Schema()
 visitSchema.add({
@@ -24,9 +24,8 @@ visitSchema.methods.toDTO = function () {
   return dto
 }
 
-visitSchema.method('toJSON', modelHelpers.toJSON)
+visitSchema.method('toJSON', toJSON)
 
 const Visit = mongoose.model('Visit', visitSchema)
 
-exports.schema = visitSchema
-exports.model = Visit
+export { visitSchema as schema, Visit }

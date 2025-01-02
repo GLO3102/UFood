@@ -1,9 +1,9 @@
-const request = require('request')
-const fs = require('fs')
-const uuidv4 = require('uuid').v4
-const { Client } = require('@googlemaps/google-maps-services-js')
-const mongoose = require('mongoose')
-const Restaurant = require('../repositories/restaurant').model
+import request from 'request'
+import fs from 'fs'
+import { v4 as uuidv4 } from 'uuid'
+import { Client } from '@googlemaps/google-maps-services-js'
+import mongoose from 'mongoose'
+import { Restaurant } from '../repositories/restaurant.js'
 
 const mongoUri = process.env.DATABASE_URL || 'mongodb://localhost/ufood'
 const googleApiKey = process.env.GOOGLE_API_KEY || 'YOUR_API_KEY'

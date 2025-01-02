@@ -1,18 +1,10 @@
-const passport = require('passport')
+import { retrieveToken } from '../middleware/authentication.js'
 
-const authentication = require('../middleware/authentication')
-
-exports.passportLogin = passport.authenticate('local-login', {
-  successRedirect: '/token',
-  failureRedirect: '/login',
-  failureFlash: true
-})
-
-exports.getToken = (req, res) => {
+export const getToken = (req, res) => {
   if (req.user) {
     res.send(req.user)
   } else {
-    const token = authentication.retrieveToken(req)
+    const token = retrieveToken(req)
     if (token) {
       res.status(401).send({
         errorCode: 'ACCESS_DENIED',
@@ -28,7 +20,7 @@ exports.getToken = (req, res) => {
   req.session.destroy()
 }
 
-exports.logout = (req, res) => {
+export const logout = (req, res) => {
   req.session.destroy()
   req.logout(() => {
     res.status(200).send();

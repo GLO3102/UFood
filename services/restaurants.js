@@ -1,5 +1,5 @@
-const Restaurant = require('../repositories/restaurant.js').model
-const Visit = require('../repositories/visit.js').model
+import { Restaurant } from '../repositories/restaurant.js'
+import { Visit } from '../repositories/visit.js'
 
 const returnNotFound = (req, res) => {
   if (!res.headerSent) {
@@ -10,7 +10,7 @@ const returnNotFound = (req, res) => {
   }
 }
 
-exports.allRestaurants = async (req, res) => {
+export const allRestaurants = async (req, res) => {
   try {
     const { q, price_range, genres, page } = req.query
     const lon = req.query.lon ? Number(req.query.lon) : null
@@ -74,7 +74,7 @@ exports.allRestaurants = async (req, res) => {
   }
 }
 
-exports.findById = async (req, res) => {
+export const findRestaurantById = async (req, res) => {
   try {
     const restaurant = await Restaurant.findById(req.params.id)
 
@@ -95,7 +95,7 @@ exports.findById = async (req, res) => {
   }
 }
 
-exports.allRestaurantVisits = async (req, res) => {
+export const allRestaurantVisits = async (req, res) => {
   try {
     const restaurant = await Restaurant.findById(req.params.id)
 

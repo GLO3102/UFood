@@ -1,5 +1,5 @@
-const mongoose = require('mongoose')
-const modelHelpers = require('./modelHelpers.js')
+import mongoose from 'mongoose'
+import { toJSON } from './modelHelpers.js'
 
 const pointSchema = new mongoose.Schema({
   type: {
@@ -44,9 +44,8 @@ restaurantSchema.methods.toDTO = function () {
   return dto
 }
 
-restaurantSchema.method('toJSON', modelHelpers.toJSON)
+restaurantSchema.method('toJSON', toJSON)
 
 const Restaurant = mongoose.model('Restaurant', restaurantSchema)
 
-exports.schema = restaurantSchema
-exports.model = Restaurant
+export { restaurantSchema as schema, Restaurant }

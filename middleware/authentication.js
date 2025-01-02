@@ -1,15 +1,14 @@
-const url = require('url')
-const UserModel = require('../repositories/user').model
-const jwt = require('jwt-simple')
+import { User } from '../repositories/user.js'
+import jwt from 'jwt-simple'
 
-exports.isAuthenticated = async (req, res, next) => {
-  const token = exports.retrieveToken(req)
+export const isAuthenticated = async (req, res, next) => {
+  const token = retrieveToken(req)
 
   if (token) {
     let decoded = null;
 
     try {
-      decoded = jwt.decode(token, 'UFOOD_TOKEN_SECRET')
+      decoded = jwt.decode(token, getTokenSecret())
     } catch (err) {
       return res.status(401).send({
         errorCode: 'ACCESS_DENIED',
@@ -17,7 +16,7 @@ exports.isAuthenticated = async (req, res, next) => {
       })
     }
     try {
-      const user = await UserModel.findOne({ _id: decoded.iss })
+      const user = await User.findOne({ _id: decoded.iss })
       if (user) {
         req.user = user
         return next()
@@ -41,13 +40,14 @@ exports.isAuthenticated = async (req, res, next) => {
   }
 }
 
-exports.retrieveToken = req => {
-  const parsedUrl = url.parse(req.url, true)
+export const getTokenSecret = () => {
+  return (process.env.TOKEN_SECRET || 'UFOOD_TOKEN_SECRET')
+}
 
+export const retrieveToken = req => {
   return (
-    (req.body && req.body.access_token) ||
-    parsedUrl.query.access_token ||
     req.headers['authorization'] ||
-    req.headers['Authorization']
-  )
+    req.headers['Authorization'] ||
+    ''
+  ).replace('Bearer ', '')
 }

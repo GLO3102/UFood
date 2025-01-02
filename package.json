@@ -5,7 +5,6 @@
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "body-parser": "1.20.3",
-    "connect-flash": "0.1.1",
     "cookie-parser": "1.4.7",
     "cors": "^2.8.5",
     "express": "^4.17.1",
@@ -41,5 +40,6 @@
   "homepage": "https://github.com/GLO3102/UFood",
   "lint-staged": {
     "**/*.*": "prettier --config=.prettierrc --write --ignore-unknown"
-  }
+  },
+  "type": "module"
 }

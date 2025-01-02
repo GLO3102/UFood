@@ -1,4 +1,4 @@
-exports.toJSON = function () {
+export const toJSON = function () {
   const obj = this.toObject()
 
   obj.id = obj._id.toString()

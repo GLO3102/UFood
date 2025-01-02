@@ -1,25 +1,25 @@
-const express = require('express')
-const bodyParser = require('body-parser')
-const cookieParser = require('cookie-parser')
-const session = require('express-session')
-const flash = require('connect-flash')
+import express from 'express'
+import bodyParser from 'body-parser'
+import cookieParser from 'cookie-parser'
+import session from 'express-session'
+import cors from 'cors'
+import passport from 'passport'
 
-const cors = require('cors')
-const passport = require('passport')
-
-const mongoose = require('mongoose')
+import mongoose from 'mongoose'
 console.log(process.env.DATABASE_URL)
 const mongoUri = process.env.DATABASE_URL || 'mongodb://localhost:27017/ufood'
 mongoose.connect(mongoUri)
 
-const authentication = require('./middleware/authentication')
-const login = require('./services/login')
-const signup = require('./services/signup')
-const user = require('./services/users')
-const status = require('./services/status')
-const restaurants = require('./services/restaurants')
-const favorites = require('./services/favorites')
-const visits = require('./services/visits')
+import { getTokenSecret, isAuthenticated } from './middleware/authentication.js'
+import { getToken, logout } from './services/login.js'
+import { welcome } from './services/signup.js'
+import { allUsers, findUserById, follow, unfollow, findIfFollowed } from './services/users.js'
+import { getHome, getStatus } from './services/status.js'
+import { allRestaurants, findRestaurantById, allRestaurantVisits } from './services/restaurants.js'
+import { createFavoriteList, createFavoriteListUnsecure, addRestaurantToFavoriteList, removeRestaurantFromFavoriteList, updateFavoriteList, removeFavoriteList, removeFavoriteListUnsecure, getFavoriteLists, findFavoriteListById, findFavoriteListsByUser  } from './services/favorites.js'
+import { allUserVisits, findVisitByRestaurantId, findVisitById, createVisit } from './services/visits.js'
+
+import { initializePassport } from './middleware/passport.js'
 
 const app = express()
 const corsOptions = {
@@ -28,11 +28,10 @@ const corsOptions = {
   credentials: true
 }
 
-const tokenSecret = 'UFOOD_TOKEN_SECRET' || process.env.TOKEN_SECRET
-
+const tokenSecret = getTokenSecret()
 app.set('jwtTokenSecret', tokenSecret)
 
-require('./middleware/passport')(passport, app)
+initializePassport(passport, app)
 
 app.use(cookieParser())
 app.use(bodyParser.json())
@@ -46,7 +45,6 @@ app.use(
 )
 app.use(passport.initialize())
 app.use(passport.session())
-app.use(flash())
 app.use(cors(corsOptions))
 
 app.use(function (error, req, res, next) {
@@ -61,79 +59,81 @@ app.use(function (error, req, res, next) {
   }
 })
 
-app.get('/', status.getHome)
-app.get('/status', status.getStatus)
-app.post('/login', passport.authenticate('local-login'), login.getToken)
-app.post('/logout', login.logout)
+app.get('/', getHome)
+app.get('/status', getStatus)
+app.post('/login', passport.authenticate('local-login'), getToken)
+app.post('/logout', logout)
 
-app.post('/signup', passport.authenticate('local-signup'), login.getToken)
-app.get('/welcome', signup.welcome)
+app.post('/signup', passport.authenticate('local-signup'), getToken)
+app.get('/welcome', welcome)
 
-app.get('/token', login.getToken)
-app.get('/tokenInfo', authentication.isAuthenticated, login.getToken)
+app.get('/token', getToken)
+app.get('/tokenInfo', isAuthenticated, getToken)
 
 // Secure API
-app.get('/users', authentication.isAuthenticated, user.allUsers)
-app.get('/users/:id', authentication.isAuthenticated, user.findById)
-app.get('/users/:id/favorites', authentication.isAuthenticated, favorites.findFavoriteListsByUser)
+app.get('/users', isAuthenticated, allUsers)
+app.get('/users/:id', isAuthenticated, findUserById)
+app.get('/users/:id/favorites', isAuthenticated, findFavoriteListsByUser)
 
-app.get('/users/:userId/restaurants/visits', authentication.isAuthenticated, visits.allUserVisits)
+app.get('/users/:userId/restaurants/visits', isAuthenticated, allUserVisits)
 app.get(
   '/users/:userId/restaurants/:restaurantId/visits',
-  authentication.isAuthenticated,
-  visits.findByRestaurantId
+  isAuthenticated,
+  findVisitByRestaurantId
 )
-app.get('/users/:userId/restaurants/visits/:id', authentication.isAuthenticated, visits.findById)
-app.post('/users/:userId/restaurants/visits', authentication.isAuthenticated, visits.createVisit)
+app.get('/users/:userId/restaurants/visits/:id', isAuthenticated, findVisitById)
+app.post('/users/:userId/restaurants/visits', isAuthenticated, createVisit)
 
-app.post('/follow', authentication.isAuthenticated, user.follow)
-app.delete('/follow/:id', authentication.isAuthenticated, user.unfollow)
-app.get('/follow/:id', authentication.isAuthenticated, user.findIfFollowed)
+app.post('/follow', isAuthenticated, follow)
+app.delete('/follow/:id', isAuthenticated, unfollow)
+app.get('/follow/:id', isAuthenticated, findIfFollowed)
 
-app.get('/restaurants', authentication.isAuthenticated, restaurants.allRestaurants)
-app.get('/restaurants/:id', authentication.isAuthenticated, restaurants.findById)
-app.get('/restaurants/:id/visits', authentication.isAuthenticated, restaurants.allRestaurantVisits)
+app.get('/restaurants', isAuthenticated, allRestaurants)
+app.get('/restaurants/:id', isAuthenticated, findRestaurantById)
+app.get('/restaurants/:id/visits', isAuthenticated, allRestaurantVisits)
 
-app.get('/favorites', authentication.isAuthenticated, favorites.getFavoriteLists)
-app.get('/favorites/:id', authentication.isAuthenticated, favorites.findFavoriteListById)
-app.post('/favorites', authentication.isAuthenticated, favorites.createFavoriteList)
-app.put('/favorites/:id', authentication.isAuthenticated, favorites.updateFavoriteList)
-app.delete('/favorites/:id', authentication.isAuthenticated, favorites.removeFavoriteList)
+app.get('/favorites', isAuthenticated, getFavoriteLists)
+app.get('/favorites/:id', isAuthenticated, findFavoriteListById)
+app.post('/favorites', isAuthenticated, createFavoriteList)
+app.put('/favorites/:id', isAuthenticated, updateFavoriteList)
+app.delete('/favorites/:id', isAuthenticated, removeFavoriteList)
 app.post(
   '/favorites/:id/restaurants',
-  authentication.isAuthenticated,
-  favorites.addRestaurantToFavoriteList
+  isAuthenticated,
+  addRestaurantToFavoriteList
 )
 app.delete(
   '/favorites/:id/restaurants/:restaurantId',
-  authentication.isAuthenticated,
-  favorites.removeRestaurantFromFavoriteList
+  isAuthenticated,
+  removeRestaurantFromFavoriteList
 )
 
 // Unsecure API
-app.get('/unsecure/users', user.allUsers)
-app.get('/unsecure/users/:id', user.findById)
-app.get('/unsecure/users/:id/favorites', favorites.findFavoriteListsByUser)
+app.get('/unsecure/users', allUsers)
+app.get('/unsecure/users/:id', findUserById)
+app.get('/unsecure/users/:id/favorites', findFavoriteListsByUser)
 
-app.get('/unsecure/users/:userId/restaurants/visits', visits.allUserVisits)
-app.get('/unsecure/users/:userId/restaurants/:restaurantId/visits', visits.findByRestaurantId)
-app.get('/unsecure/users/:userId/restaurants/visits/:id', visits.findById)
-app.post('/unsecure/users/:userId/restaurants/visits', visits.createVisit)
+app.get('/unsecure/users/:userId/restaurants/visits', allUserVisits)
+app.get('/unsecure/users/:userId/restaurants/:restaurantId/visits', findVisitByRestaurantId)
+app.get('/unsecure/users/:userId/restaurants/visits/:id', findVisitById)
+app.post('/unsecure/users/:userId/restaurants/visits', createVisit)
 
-app.get('/unsecure/restaurants', restaurants.allRestaurants)
-app.get('/unsecure/restaurants/:id', restaurants.findById)
-app.get('/unsecure/restaurants/:id/visits', restaurants.allRestaurantVisits)
+app.get('/unsecure/restaurants', allRestaurants)
+app.get('/unsecure/restaurants/:id', findRestaurantById)
+app.get('/unsecure/restaurants/:id/visits', allRestaurantVisits)
 
-app.get('/unsecure/favorites', favorites.getFavoriteLists)
-app.get('/unsecure/favorites/:id', favorites.findFavoriteListById)
-app.post('/unsecure/favorites', favorites.createFavoriteListUnsecure)
-app.put('/unsecure/favorites/:id', favorites.updateFavoriteList)
-app.delete('/unsecure/favorites/:id', favorites.removeFavoriteListUnsecure)
-app.post('/unsecure/favorites/:id/restaurants', favorites.addRestaurantToFavoriteList)
+app.get('/unsecure/favorites', getFavoriteLists)
+app.get('/unsecure/favorites/:id', findFavoriteListById)
+app.post('/unsecure/favorites', createFavoriteListUnsecure)
+app.put('/unsecure/favorites/:id', updateFavoriteList)
+app.delete('/unsecure/favorites/:id', removeFavoriteListUnsecure)
+app.post('/unsecure/favorites/:id/restaurants', addRestaurantToFavoriteList)
 app.delete(
   '/unsecure/favorites/:id/restaurants/:restaurantId',
-  favorites.removeRestaurantFromFavoriteList
+  removeRestaurantFromFavoriteList
 )
 
 const port = process.env.PORT || 3000
 app.listen(port)
+
+console.log(`Listening on port ${port}`)

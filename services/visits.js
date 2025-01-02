@@ -1,6 +1,6 @@
-const Restaurant = require('../repositories/restaurant.js').model
-const User = require('../repositories/user.js').model
-const Visit = require('../repositories/visit.js').model
+import { Restaurant } from '../repositories/restaurant.js'
+import { User } from '../repositories/user.js'
+import { Visit } from '../repositories/visit.js'
 
 const restaurantNotFound = (req, res) => {
   res.status(404).send({
@@ -29,7 +29,7 @@ const ensureUser = async (req, res) => {
   return userExists
 }
 
-exports.allUserVisits = async (req, res) => {
+export const allUserVisits = async (req, res) => {
   try {
     const isUserValid = await ensureUser(req, res)
 
@@ -60,7 +60,7 @@ exports.allUserVisits = async (req, res) => {
   }
 }
 
-exports.findByRestaurantId = async (req, res) => {
+export const findVisitByRestaurantId = async (req, res) => {
   try {
     const isUserValid = await ensureUser(req, res)
 
@@ -91,7 +91,7 @@ exports.findByRestaurantId = async (req, res) => {
   }
 }
 
-exports.findById = async (req, res) => {
+export const findVisitById = async (req, res) => {
   try {
     const isUserValid = await ensureUser(req, res)
 
@@ -116,7 +116,7 @@ exports.findById = async (req, res) => {
   }
 }
 
-exports.createVisit = async (req, res) => {
+export const createVisit = async (req, res) => {
   let restaurant, user
   try {
     user = await User.findById(req.params.userId)
