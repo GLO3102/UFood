@@ -20,7 +20,12 @@ export const getToken = (req, res) => {
   req.session.destroy()
 }
 
-export const logout = (req, res) => {
+export const logout = async (req, res) => {
+  if (req.user) {
+    req.user.token = undefined
+    await req.user.save()
+  }
+
   req.session.destroy()
   req.logout(() => {
     res.status(200).send()
