@@ -46,10 +46,10 @@ Le livrable 1 consiste en définir le _design_ de votre application et choisir l
 
 - Page d'accueil de l'application incluant les éléments suivants:
   - Une liste des restaurants
-  - Une barre de recherche
+  - Une barre de recherche *(permet la recherche de restaurants)*
   - Une facon de filtrer la liste des restaurants (par fourchette de prix, par genre)
 - Un menu incluant les éléments suivants:
-  - Barre de recherche
+  - Barre de recherche *(permet la recherche de restaurants - servira également pour la recherche d'utilisateurs au Livrable 3)*
   - Lien vers la page d'accueil
   - Lien pour se connecter/déconnecter
   - Le nom de l'utilisateur courant si connecté
@@ -59,9 +59,9 @@ Le livrable 1 consiste en définir le _design_ de votre application et choisir l
   - Adresse
   - Numéro de téléphone
   - Position géographique sur la carte **FONCTIONNEL**
-  - Bouton pour directions vers le restaurant **FONCTIONNEL**
+  - Bouton pour directions vers le restaurant **FONCTIONNEL** - l'itinéraire doit être affiché à même la carte dans la page
   - Heures d'ouverture
-  - Photos du restaurant
+  - Photos du restaurant (on s'attend ici à voir plusieurs photos!)
   - Genre(s) associé(s) au restaurant
   - Fourchette de prix du restaurant
   - Cote moyenne du restaurant
@@ -97,7 +97,7 @@ Le livrable 2 consiste en l'intégration des fonctionnalités du livrable 1 avec
   - Bouton pour entrer une visite d'un restaurant, ouvrant la modale de visite du restaurant.
 - Page du profil utilisateur
   - Intégrer la page complètement avec l'API
-  - Pour chaque visite d'un restaurant, pouvoir ouvrir la modale de visite d'un restaurant en mode _read-only_ avec les informations reliées à la visite.
+  - Pour chaque visite d'un restaurant, pouvoir ouvrir la modale de visite d'un restaurant en mode _read-only_ avec les informations reliées à la visite. La page du restaurant doit également être accessible à partir de la modale. 
   - Permettre de créer une liste de restaurants favoris et de lui donner un nom.
   - Visualiser les listes de restaurants favoris de l'usager et leur contenu.
   - Permettre de modifier une liste de restaurants
@@ -138,7 +138,7 @@ Le livrable 3 consiste en l'intégration de l'authentification ainsi que l'ajout
   - La recherche doit pouvoir s'exécuter en fonction de la position courante de l'usager
   - L'usager doit pouvoir zoomer in/out et se déplacer sur la carte
   - Les fonctionnalités telles que filtering, recherche par nom etc. doivent être 100% fonctionnelles en mode carte.
-- Supporter la recherche d'usagers en mode connecté.
+- Supporter la recherche d'usagers en mode connecté dans la barre de recherche du **menu**
 - Permettre d'afficher la liste des followers dans la page profil utilisateur
 - Permettre d'afficher la liste des usagers suivis (following) dans la page profil utilisateur
 - Permettre de voir le profil d'un usager en mode connecté.
