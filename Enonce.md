@@ -69,7 +69,7 @@ Le livrable 1 consiste en définir le _design_ de votre application et choisir l
   - Score de l'utilisateur
   - Une liste des restaurants visités récemment, incluant le nombre de visite(s) à chaque restaurant
   - Dans le cas d'aucune visite(s), un lien vers la page d'accueil
-- Document design
+- README adéquat
   - Expliquer comment lancer l’application
 
 ## Livrable 2
@@ -105,7 +105,7 @@ Le livrable 2 consiste en l'intégration des fonctionnalités du livrable 1 avec
     - Supprimer une liste
     - Permettre de visualiser un restaurant directement à partir de la liste
 - S'assurer que tous les liens soient **dynamiques**
-- Document design
+- README adéquat
   - Expliquer comment lancer l’application
   - Donner des détails sur comment voir chacune des pages
     - urls
@@ -121,6 +121,7 @@ Le livrable 3 consiste en l'intégration de l'authentification ainsi que l'ajout
 - Toutes les sections devront être responsives (supporter les différents formats d'écran).
 - Le livrable 3 utilisera la version sécurisée de l'API.
 - Tous les formulaires doivent être validés via JavaScript **avant** d’être soumis au serveur.
+- Vos composants devront avoir une couverture de tests unitaires minimales.
 
 ### Fonctionnalités demandées
 
@@ -132,6 +133,7 @@ Le livrable 3 consiste en l'intégration de l'authentification ainsi que l'ajout
   - La page doit afficher un message d’erreur clair en cas de mauvaise combinaison courriel et mot de passe.
 - S'assurer que toutes les actions dans l'application sont indisponibles si l'usager n'est pas connecté, et invite l'usager à se connecter.
   - Valide pour les actions telles que identifier une visite à un restaurant, ajouter un restaurant à une liste de favoris etc.
+  - **NOTEZ** que dépendamment de vos choix d'implémentation, il est possible d'utiliser l'API unsecure à ce point.
 - Ajouter un mode **map** à la page d'accueil
   - La page d'accueil doit permettre d'alterner entre la liste de restaurants et une vue en mode carte géographique
   - La recherche doit pouvoir s'exécuter en fonction de la position courante de l'usager
@@ -150,8 +152,8 @@ Le livrable 3 consiste en l'intégration de l'authentification ainsi que l'ajout
   - Obtenir des suggestions de restaurants similaires au restaurant courant
   - Une fonctionnalité de votre choix
     - Cette fonctionnalité doit être approuvée par l'enseignant du cours.
-- Document design
-  - Expliquer comment lancer l’application
+- README adéquat
+  - Expliquer comment lancer l’application et les tests
   - Donner des détails sur comment voir chacune des pages
     - urls
     - boutons à cliquer
