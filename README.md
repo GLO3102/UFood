@@ -13,6 +13,7 @@ L'API UFood est disponible sur [https://ufoodapi.herokuapp.com](https://ufoodapi
 ### Documentation
 
 Voir la documentation de l'API sur [https://ufoodapi.herokuapp.com/docs/](https://ufoodapi.herokuapp.com/docs/).
+
 Notez bien la section `unsecure` qui ne sera utilisée qu'au livrable 2 et potentiellement au livrable 3 dépendamment de vos choix.
 
 ### Grille de correction
