@@ -5,7 +5,7 @@ Le projet de session consiste à développer une application permettant de trouv
 ## Consignes générales
 
 - Le projet doit être fait en équipe de 4 à 6 étudiants.
-- L’équipe doit utiliser les dépôts GitHub fournis par les enseignants.
+- L’équipe doit utiliser les dépôts GitHub fournis par l'enseignant.
 - L'application doit être réalisée en anglais.
 - Les dates de remise exactes peuvent être consultées via le portail des cours.
 - La correction sera réalisée utilisant Google Chrome.
