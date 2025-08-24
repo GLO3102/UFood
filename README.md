@@ -12,7 +12,7 @@ L'API UFood est disponible sur [https://ufoodapi.herokuapp.com](https://ufoodapi
 
 ### Documentation
 
-Voir la documentation dans le [wiki](https://github.com/GLO3102/UFood/wiki/API).
+Voir la documentation de l'API sur [https://ufoodapi.herokuapp.com/docs/](https://ufoodapi.herokuapp.com/docs/).
 
 ### Grille de correction
 
