@@ -14,20 +14,19 @@ Le projet de session consiste à développer une application permettant de trouv
   - iPad
   - iPhone
 - Tous les frameworks CSS et JS sont permis - en cas de doute vérifiez avec l'enseignant.
+- TypeScript est permis pour le projet.
 - Si vous désirez réaliser le projet de session avec un autre framework que Vue (React, Angular etc.) - veuillez communiquer avec l'enseignant avant de commencer.
 
-### Pour chaque livrable
+### Remises
 
-Fournir un ZIP incluant:
+Les remises ne seront pas effectuées par le portail des cours, mais plutôt gérées à partir de Github.
 
-- Document design au format PDF
-  - Expliquer comment lancer l’application
-    - Doit être **très** simple (1 ou 2 étapes maximum)
-  - Votre numéro d’équipe
-  - Les membres de votre équipe
-    - Noms, IDULs et Matricules
-  - Explications supplémentaires si nécessaire
-- Dossier qui comprend les fichiers de votre projet (sans `node_modules`)
+Pour chaque livrable, les équipes devront suivre la procédure suivante:
+
+1. Créer une branche nommée release-X (où X est le numéro du livrable) dans le dépôt GitHub.
+2. Fournir un README du livrable avec les instructions pour les correcteurs.
+
+La branche ne doit plus être touchée une fois la date de remise passée. Une modification de la branche après la date de remise peut entraîner de fortes pénalités. Les correcteurs utiliseront le code directement sur GitHub.
 
 **ATTENTION**
 
