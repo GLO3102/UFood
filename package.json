@@ -14,7 +14,9 @@
     "mongoose": "^8.0.4",
     "passport": "0.7.0",
     "passport-local": "1.0.0",
-    "request": "^2.88.2"
+    "request": "^2.88.2",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1"
   },
   "devDependencies": {
     "@googlemaps/google-maps-services-js": "^3.1.6",
