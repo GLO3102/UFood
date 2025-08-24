@@ -119,7 +119,7 @@ Le livrable 3 consiste en l'intégration de l'authentification ainsi que l'ajout
 ### Consignes générales
 
 - Toutes les sections devront être responsives (supporter les différents formats d'écran).
-- Le livrable 3 utilisera la version sécurisée de l'API.
+- Le livrable 3 utilisera la version sécurisée de l'API (voir note ci-dessous).
 - Tous les formulaires doivent être validés via JavaScript **avant** d’être soumis au serveur.
 - Vos composants devront avoir une couverture de tests unitaires minimales, fait avec Jest ou Vitest.
 
