@@ -3,12 +3,12 @@
   "version": "0.1.0",
   "main": "index.js",
   "dependencies": {
-    "bcryptjs": "^2.4.3",
-    "body-parser": "1.20.3",
+    "bcryptjs": "^3.0.2",
+    "body-parser": "2.2.0",
     "cookie-parser": "1.4.7",
     "cors": "^2.8.5",
-    "express": "^4.17.1",
-    "express-session": "1.18.1",
+    "express": "^5.1.0",
+    "express-session": "1.18.2",
     "jwt-simple": "^0.5.6",
     "moment": "^2.27.0",
     "mongoose": "^8.0.4",
@@ -19,7 +19,7 @@
   "devDependencies": {
     "@googlemaps/google-maps-services-js": "^3.1.6",
     "husky": "^9.1.7",
-    "lint-staged": "^15.2.0",
+    "lint-staged": "^16.1.5",
     "nodemon": "^3.0.2",
     "prettier": "^3.4.2"
   },
