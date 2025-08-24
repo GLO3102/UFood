@@ -19,7 +19,7 @@ Le projet de session consiste à développer une application permettant de trouv
 
 ### Remises
 
-Les remises ne seront pas effectuées par le portail des cours, mais plutôt gérées à partir de Github.
+Les remises ne seront pas effectuées par le portail des cours, mais plutôt gérées à partir de GitHub.
 
 Pour chaque livrable, les équipes devront suivre la procédure suivante:
 
