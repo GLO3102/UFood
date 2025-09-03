@@ -76,6 +76,10 @@ const options = {
               type: 'string',
               description: 'Restaurant phone number'
             },
+            place_id: {
+              type: 'string',
+              description: 'Google Places ID'
+            },
             genres: {
               type: 'array',
               items: {
@@ -85,11 +89,77 @@ const options = {
             },
             price_range: {
               type: 'number',
-              description: 'Price range (1-4)'
+              description: 'Price range (1-4)',
+              minimum: 1,
+              maximum: 4
             },
             rating: {
               type: 'number',
               description: 'Restaurant rating'
+            },
+            opening_hours: {
+              type: 'object',
+              properties: {
+                sunday: {
+                  type: 'string',
+                  description: 'Opening hours for Sunday (e.g., "11:00-21:00")'
+                },
+                monday: {
+                  type: 'string',
+                  description: 'Opening hours for Monday (e.g., "11:30-22:00")'
+                },
+                tuesday: {
+                  type: 'string',
+                  description: 'Opening hours for Tuesday (e.g., "11:30-22:00")'
+                },
+                wednesday: {
+                  type: 'string',
+                  description: 'Opening hours for Wednesday (e.g., "11:30-22:00")'
+                },
+                thursday: {
+                  type: 'string',
+                  description: 'Opening hours for Thursday (e.g., "11:30-22:00")'
+                },
+                friday: {
+                  type: 'string',
+                  description: 'Opening hours for Friday (e.g., "11:30-22:00")'
+                },
+                saturday: {
+                  type: 'string',
+                  description: 'Opening hours for Saturday (e.g., "11:00-22:00")'
+                }
+              },
+              description: 'Restaurant opening hours for each day of the week'
+            },
+            pictures: {
+              type: 'array',
+              items: {
+                type: 'string',
+                format: 'uri',
+                description: 'URL to restaurant picture'
+              },
+              description: 'Array of restaurant picture URLs'
+            },
+            location: {
+              type: 'object',
+              properties: {
+                type: {
+                  type: 'string',
+                  enum: ['Point'],
+                  description: 'GeoJSON type'
+                },
+                coordinates: {
+                  type: 'array',
+                  items: {
+                    type: 'number'
+                  },
+                  minItems: 2,
+                  maxItems: 2,
+                  description: 'Longitude and latitude coordinates [longitude, latitude]'
+                }
+              },
+              required: ['type', 'coordinates'],
+              description: 'GeoJSON Point object representing restaurant location'
             }
           }
         },
