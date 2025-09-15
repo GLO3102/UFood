@@ -181,9 +181,16 @@ const options = {
             restaurants: {
               type: 'array',
               items: {
-                $ref: '#/components/schemas/Restaurant'
+                type: 'object',
+                properties: {
+                  id: {
+                    type: 'string',
+                    description: 'Restaurant ID'
+                  }
+                },
+                required: ['id']
               },
-              description: 'List of restaurants'
+              description: 'List of restaurant IDs'
             }
           }
         },

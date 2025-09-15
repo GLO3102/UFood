@@ -1396,6 +1396,9 @@ app.get('/unsecure/favorites/:id', findFavoriteListById)
  *               name:
  *                 type: string
  *                 description: Name of the favorite list
+ *               owner:
+ *                 type: string
+ *                 description: Email of the owner of the favorite list
  *               restaurants:
  *                 type: array
  *                 items:
