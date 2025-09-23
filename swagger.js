@@ -89,9 +89,9 @@ const options = {
             },
             price_range: {
               type: 'number',
-              description: 'Price range (1-4)',
+              description: 'Price range (1-5)',
               minimum: 1,
-              maximum: 4
+              maximum: 5
             },
             rating: {
               type: 'number',

@@ -629,7 +629,7 @@ app.get('/follow/:id', isAuthenticated, findIfFollowed)
  *         name: page
  *         schema:
  *           type: integer
- *           minimum: 1
+ *           minimum: 0
  *         description: Page number for pagination
  *     responses:
  *       200:
@@ -1257,7 +1257,7 @@ app.post('/unsecure/users/:userId/restaurants/visits', createVisit)
  *         name: page
  *         schema:
  *           type: integer
- *           minimum: 1
+ *           minimum: 0
  *         description: Page number for pagination
  *     responses:
  *       200:
