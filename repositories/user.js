@@ -4,9 +4,9 @@ import { toJSON } from './modelHelpers.js'
 
 const userSchema = new mongoose.Schema()
 userSchema.add({
-  name: String,
-  email: String,
-  password: String,
+  name: { type: String, required: true, default: '' },
+  email: { type: String, required: true },
+  password: { type: String, required: true },
   token: String,
   expiration: Number,
   rating: { type: Number, default: 0 },
