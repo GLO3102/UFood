@@ -5,8 +5,7 @@ export const welcome = (req, res) => {
       user: {
         id: req.user._id,
         email: req.user.email,
-        name: req.user.name,
-        friends: req.user.friends
+        name: req.user.name
       }
     })
   }

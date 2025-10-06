@@ -162,7 +162,7 @@ app.post('/logout', logout)
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/TokenResponse'
+ *               $ref: '#/components/schemas/User'
  *       400:
  *         description: Registration failed
  *         content:
@@ -170,7 +170,7 @@ app.post('/logout', logout)
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-app.post('/signup', passport.authenticate('local-signup'), getToken)
+app.post('/signup', passport.authenticate('local-signup'), welcome)
 
 /**
  * @swagger
@@ -233,6 +233,25 @@ app.get('/tokenInfo', isAuthenticated, getToken)
  *     tags: [Users]
  *     security:
  *       - bearerAuth: []
+ *     parameters:
+ *       - in: query
+ *         name: q
+ *         schema:
+ *           type: string
+ *         description: Search query for user name
+ *       - in: query
+ *         name: limit
+ *         schema:
+ *           type: integer
+ *           minimum: 1
+ *           maximum: 100
+ *         description: Maximum number of results
+ *       - in: query
+ *         name: page
+ *         schema:
+ *           type: integer
+ *           minimum: 0
+ *         description: Page number for pagination
  *     responses:
  *       200:
  *         description: List of all users
@@ -1023,6 +1042,25 @@ app.delete(
  *   get:
  *     summary: Get all users (unsecured)
  *     tags: [Unsecure API]
+ *     parameters:
+ *       - in: query
+ *         name: q
+ *         schema:
+ *           type: string
+ *         description: Search query for user name
+ *       - in: query
+ *         name: limit
+ *         schema:
+ *           type: integer
+ *           minimum: 1
+ *           maximum: 100
+ *         description: Maximum number of results
+ *       - in: query
+ *         name: page
+ *         schema:
+ *           type: integer
+ *           minimum: 0
+ *         description: Page number for pagination
  *     responses:
  *       200:
  *         description: List of all users
