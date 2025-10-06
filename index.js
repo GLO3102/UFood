@@ -74,6 +74,7 @@ app.use(function (error, req, res, next) {
         'Arguments could not be parsed, make sure request is valid. Refer to the documentation : https://github.com/GLO3102/UFood/wiki/2-API'
     })
   } else {
+    console.error(error)
     res.status(500).send('Something broke!', error)
   }
 })
