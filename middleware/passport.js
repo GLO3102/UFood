@@ -8,11 +8,12 @@ export const initializePassport = (passport, app) => {
     done(null, user.id)
   })
 
-  passport.deserializeUser(function (id, done) {
-    User.findById(id, function (err, user) {
-      done(err, user)
-    })
-  })
+  passport.deserializeUser((id, done) => {
+    User.findById(id).exec()
+      .then(user => done(null, user))
+      .catch(err => done(err));
+  });
+
 
   passport.use(
     'local-login',
