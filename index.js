@@ -323,15 +323,34 @@ app.get('/users/:id', isAuthenticated, findUserById)
  *         schema:
  *           type: string
  *         description: User ID
+ *       - in: query
+ *         name: limit
+ *         schema:
+ *           type: integer
+ *           minimum: 1
+ *           maximum: 100
+ *         description: Maximum number of results (defaults to 10)
+ *       - in: query
+ *         name: page
+ *         schema:
+ *           type: integer
+ *           minimum: 0
+ *         description: Page number for pagination
  *     responses:
  *       200:
  *         description: User's favorite lists
  *         content:
  *           application/json:
  *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/FavoriteList'
+ *               type: object
+ *               properties:
+ *                 items:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/FavoriteList'
+ *                 total:
+ *                   type: integer
+ *                   description: Total number of favorite lists
  *       401:
  *         description: Unauthorized
  *         content:
@@ -753,15 +772,35 @@ app.get('/restaurants/:id/visits', isAuthenticated, allRestaurantVisits)
  *     tags: [Favorites]
  *     security:
  *       - bearerAuth: []
+ *     parameters:
+ *       - in: query
+ *         name: limit
+ *         schema:
+ *           type: integer
+ *           minimum: 1
+ *           maximum: 100
+ *         description: Maximum number of results (defaults to 10)
+ *       - in: query
+ *         name: page
+ *         schema:
+ *           type: integer
+ *           minimum: 0
+ *         description: Page number for pagination
  *     responses:
  *       200:
  *         description: List of favorite lists
  *         content:
  *           application/json:
  *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/FavoriteList'
+ *               type: object
+ *               properties:
+ *                 items:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/FavoriteList'
+ *                 total:
+ *                   type: integer
+ *                   description: Total number of favorite lists
  *       401:
  *         description: Unauthorized
  *         content:
@@ -1116,15 +1155,34 @@ app.get('/unsecure/users/:id', findUserById)
  *         schema:
  *           type: string
  *         description: User ID
+ *       - in: query
+ *         name: limit
+ *         schema:
+ *           type: integer
+ *           minimum: 1
+ *           maximum: 100
+ *         description: Maximum number of results (defaults to 10)
+ *       - in: query
+ *         name: page
+ *         schema:
+ *           type: integer
+ *           minimum: 0
+ *         description: Page number for pagination
  *     responses:
  *       200:
  *         description: User's favorite lists
  *         content:
  *           application/json:
  *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/FavoriteList'
+ *               type: object
+ *               properties:
+ *                 items:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/FavoriteList'
+ *                 total:
+ *                   type: integer
+ *                   description: Total number of favorite lists
  */
 app.get('/unsecure/users/:id/favorites', findFavoriteListsByUser)
 
@@ -1376,15 +1434,35 @@ app.get('/unsecure/restaurants/:id/visits', allRestaurantVisits)
  *   get:
  *     summary: Get all favorite lists (unsecured)
  *     tags: [Unsecure API]
+ *     parameters:
+ *       - in: query
+ *         name: limit
+ *         schema:
+ *           type: integer
+ *           minimum: 1
+ *           maximum: 100
+ *         description: Maximum number of results (defaults to 10)
+ *       - in: query
+ *         name: page
+ *         schema:
+ *           type: integer
+ *           minimum: 0
+ *         description: Page number for pagination
  *     responses:
  *       200:
  *         description: List of favorite lists
  *         content:
  *           application/json:
  *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/FavoriteList'
+ *               type: object
+ *               properties:
+ *                 items:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/FavoriteList'
+ *                 total:
+ *                   type: integer
+ *                   description: Total number of favorite lists
  */
 app.get('/unsecure/favorites', getFavoriteLists)
 
