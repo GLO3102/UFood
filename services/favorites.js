@@ -143,7 +143,7 @@ export const updateFavoriteList = async (req, res) => {
     }
 
     favoriteList.name = req.body.name
-    favoriteList.tracks = req.body.tracks
+    favoriteList.restaurants = req.body.restaurants
     favoriteList.save()
     res.status(200).send(favoriteList.toJSON())
   } catch (err) {
