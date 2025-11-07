@@ -143,7 +143,27 @@ export const updateFavoriteList = async (req, res) => {
     }
 
     favoriteList.name = req.body.name
-    favoriteList.restaurants = req.body.restaurants
+
+    // Fetch restaurants from list of objects with ids
+    if (req.body.restaurants && Array.isArray(req.body.restaurants)) {
+      const restaurantIds = req.body.restaurants.map(r => r.id)
+      const restaurants = await Restaurant.find({ _id: { $in: restaurantIds } })
+
+      if (restaurants.length !== restaurantIds.length) {
+        const foundIds = restaurants.map(r => r.id)
+        const missingId = restaurantIds.find(id => !foundIds.includes(id))
+        return res.status(404).send({
+          errorCode: 'RESTAURANT_NOT_FOUND',
+          message: 'Restaurant ' + missingId + ' was not found'
+        })
+      }
+
+      favoriteList.restaurants = restaurants.map(r => ({
+        ...r.toJSON(),
+        _id: r.id
+      }))
+    }
+
     favoriteList.save()
     res.status(200).send(favoriteList.toJSON())
   } catch (err) {
