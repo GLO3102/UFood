@@ -1199,6 +1199,18 @@ app.get('/unsecure/users/:id/favorites', findFavoriteListsByUser)
  *         schema:
  *           type: string
  *         description: User ID
+ *       - in: query
+ *         name: page
+ *         schema:
+ *           type: integer
+ *           default: 0
+ *         description: Page number for pagination
+ *       - in: query
+ *         name: limit
+ *         schema:
+ *           type: integer
+ *           default: 10
+ *         description: Number of items per page
  *     responses:
  *       200:
  *         description: List of user visits
@@ -1230,6 +1242,18 @@ app.get('/unsecure/users/:userId/restaurants/visits', allUserVisits)
  *         schema:
  *           type: string
  *         description: Restaurant ID
+ *       - in: query
+ *         name: page
+ *         schema:
+ *           type: integer
+ *           default: 0
+ *         description: Page number for pagination
+ *       - in: query
+ *         name: limit
+ *         schema:
+ *           type: integer
+ *           default: 10
+ *         description: Number of items per page
  *     responses:
  *       200:
  *         description: List of visits for the restaurant by the user
