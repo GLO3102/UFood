@@ -51,11 +51,59 @@ const options = {
             following: {
               type: 'array',
               items: {
-                type: 'string'
+                type: 'object',
+                properties: {
+                  id: {
+                    type: 'string',
+                    description: 'User ID'
+                  },
+                  email: {
+                    type: 'string',
+                    format: 'email',
+                    description: 'User email'
+                  },
+                  name: {
+                    type: 'string',
+                    description: 'User name'
+                  }
+                }
               },
-              description: 'List of user IDs being followed'
+              description: 'List of users being followed'
+            },
+            followers: {
+              type: 'array',
+              items: {
+                type: 'object',
+                properties: {
+                  id: {
+                    type: 'string',
+                    description: 'User ID'
+                  },
+                  email: {
+                    type: 'string',
+                    format: 'email',
+                    description: 'User email'
+                  },
+                  name: {
+                    type: 'string',
+                    description: 'User name'
+                  }
+                }
+              },
+              description: 'List of followers'
             }
           }
+        },
+        RestaurantRef: {
+          type: 'object',
+          properties: {
+            id: {
+              type: 'string',
+              description: 'Restaurant ID'
+            }
+          },
+          required: ['id'],
+          description: 'Reference to a restaurant by ID'
         },
         Restaurant: {
           type: 'object',
@@ -267,6 +315,51 @@ const options = {
             },
             user: {
               $ref: '#/components/schemas/User'
+            }
+          }
+        },
+        PaginatedUsers: {
+          type: 'object',
+          properties: {
+            items: {
+              type: 'array',
+              items: {
+                $ref: '#/components/schemas/User'
+              }
+            },
+            total: {
+              type: 'integer',
+              description: 'Total number of users'
+            }
+          }
+        },
+        PaginatedRestaurants: {
+          type: 'object',
+          properties: {
+            items: {
+              type: 'array',
+              items: {
+                $ref: '#/components/schemas/Restaurant'
+              }
+            },
+            total: {
+              type: 'integer',
+              description: 'Total number of restaurants'
+            }
+          }
+        },
+        PaginatedVisits: {
+          type: 'object',
+          properties: {
+            items: {
+              type: 'array',
+              items: {
+                $ref: '#/components/schemas/Visit'
+              }
+            },
+            total: {
+              type: 'integer',
+              description: 'Total number of visits'
             }
           }
         },

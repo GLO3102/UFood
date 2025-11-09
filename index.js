@@ -255,13 +255,11 @@ app.get('/tokenInfo', isAuthenticated, getToken)
  *         description: Page number for pagination
  *     responses:
  *       200:
- *         description: List of all users
+ *         description: Paginated list of all users
  *         content:
  *           application/json:
  *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/User'
+ *               $ref: '#/components/schemas/PaginatedUsers'
  *       401:
  *         description: Unauthorized
  *         content:
@@ -377,13 +375,11 @@ app.get('/users/:id/favorites', isAuthenticated, findFavoriteListsByUser)
  *         description: User ID
  *     responses:
  *       200:
- *         description: List of user visits
+ *         description: Paginated list of user visits
  *         content:
  *           application/json:
  *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/Visit'
+ *               $ref: '#/components/schemas/PaginatedVisits'
  *       401:
  *         description: Unauthorized
  *         content:
@@ -416,13 +412,11 @@ app.get('/users/:userId/restaurants/visits', isAuthenticated, allUserVisits)
  *         description: Restaurant ID
  *     responses:
  *       200:
- *         description: List of visits for the restaurant by the user
+ *         description: Paginated list of visits for the restaurant by the user
  *         content:
  *           application/json:
  *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/Visit'
+ *               $ref: '#/components/schemas/PaginatedVisits'
  *       401:
  *         description: Unauthorized
  *         content:
@@ -625,15 +619,17 @@ app.delete('/follow/:id', isAuthenticated, unfollow)
  *         description: User ID to check
  *     responses:
  *       200:
- *         description: Following status
+ *         description: User information if following
  *         content:
  *           application/json:
  *             schema:
- *               type: object
- *               properties:
- *                 following:
- *                   type: boolean
- *                   description: Whether currently following the user
+ *               $ref: '#/components/schemas/User'
+ *       404:
+ *         description: Not following this user
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
  *       401:
  *         description: Unauthorized
  *         content:
@@ -658,6 +654,26 @@ app.get('/follow/:id', isAuthenticated, findIfFollowed)
  *           type: string
  *         description: Search query for restaurant name
  *       - in: query
+ *         name: price_range
+ *         schema:
+ *           type: string
+ *         description: Comma-separated price ranges to filter by (e.g., "1,2,3")
+ *       - in: query
+ *         name: genres
+ *         schema:
+ *           type: string
+ *         description: Comma-separated genres to filter by (e.g., "Italian,Mexican")
+ *       - in: query
+ *         name: lon
+ *         schema:
+ *           type: number
+ *         description: Longitude for location-based filtering
+ *       - in: query
+ *         name: lat
+ *         schema:
+ *           type: number
+ *         description: Latitude for location-based filtering
+ *       - in: query
  *         name: limit
  *         schema:
  *           type: integer
@@ -672,13 +688,11 @@ app.get('/follow/:id', isAuthenticated, findIfFollowed)
  *         description: Page number for pagination
  *     responses:
  *       200:
- *         description: List of restaurants
+ *         description: Paginated list of restaurants
  *         content:
  *           application/json:
  *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/Restaurant'
+ *               $ref: '#/components/schemas/PaginatedRestaurants'
  *       401:
  *         description: Unauthorized
  *         content:
@@ -742,13 +756,11 @@ app.get('/restaurants/:id', isAuthenticated, findRestaurantById)
  *         description: Restaurant ID
  *     responses:
  *       200:
- *         description: List of visits for the restaurant
+ *         description: Paginated list of visits for the restaurant
  *         content:
  *           application/json:
  *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/Visit'
+ *               $ref: '#/components/schemas/PaginatedVisits'
  *       404:
  *         description: Restaurant not found
  *         content:
@@ -870,8 +882,8 @@ app.get('/favorites/:id', isAuthenticated, findFavoriteListById)
  *               restaurants:
  *                 type: array
  *                 items:
- *                   type: string
- *                 description: Array of restaurant IDs
+ *                   $ref: '#/components/schemas/RestaurantRef'
+ *                 description: Array of restaurant references
  *     responses:
  *       201:
  *         description: Favorite list created successfully
@@ -922,8 +934,8 @@ app.post('/favorites', isAuthenticated, createFavoriteList)
  *               restaurants:
  *                 type: array
  *                 items:
- *                   type: string
- *                 description: Array of restaurant IDs
+ *                   $ref: '#/components/schemas/RestaurantRef'
+ *                 description: Array of restaurant references
  *     responses:
  *       200:
  *         description: Favorite list updated successfully
@@ -1103,13 +1115,11 @@ app.delete(
  *         description: Page number for pagination
  *     responses:
  *       200:
- *         description: List of all users
+ *         description: Paginated list of all users
  *         content:
  *           application/json:
  *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/User'
+ *               $ref: '#/components/schemas/PaginatedUsers'
  */
 app.get('/unsecure/users', allUsers)
 
@@ -1213,13 +1223,11 @@ app.get('/unsecure/users/:id/favorites', findFavoriteListsByUser)
  *         description: Number of items per page
  *     responses:
  *       200:
- *         description: List of user visits
+ *         description: Paginated list of user visits
  *         content:
  *           application/json:
  *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/Visit'
+ *               $ref: '#/components/schemas/PaginatedVisits'
  */
 app.get('/unsecure/users/:userId/restaurants/visits', allUserVisits)
 
@@ -1256,13 +1264,11 @@ app.get('/unsecure/users/:userId/restaurants/visits', allUserVisits)
  *         description: Number of items per page
  *     responses:
  *       200:
- *         description: List of visits for the restaurant by the user
+ *         description: Paginated list of visits for the restaurant by the user
  *         content:
  *           application/json:
  *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/Visit'
+ *               $ref: '#/components/schemas/PaginatedVisits'
  */
 app.get('/unsecure/users/:userId/restaurants/:restaurantId/visits', findVisitByRestaurantId)
 
@@ -1368,6 +1374,26 @@ app.post('/unsecure/users/:userId/restaurants/visits', createVisit)
  *           type: string
  *         description: Search query for restaurant name
  *       - in: query
+ *         name: price_range
+ *         schema:
+ *           type: string
+ *         description: Comma-separated price ranges to filter by (e.g., "1,2,3")
+ *       - in: query
+ *         name: genres
+ *         schema:
+ *           type: string
+ *         description: Comma-separated genres to filter by (e.g., "Italian,Mexican")
+ *       - in: query
+ *         name: lon
+ *         schema:
+ *           type: number
+ *         description: Longitude for location-based filtering
+ *       - in: query
+ *         name: lat
+ *         schema:
+ *           type: number
+ *         description: Latitude for location-based filtering
+ *       - in: query
  *         name: limit
  *         schema:
  *           type: integer
@@ -1382,13 +1408,11 @@ app.post('/unsecure/users/:userId/restaurants/visits', createVisit)
  *         description: Page number for pagination
  *     responses:
  *       200:
- *         description: List of restaurants
+ *         description: Paginated list of restaurants
  *         content:
  *           application/json:
  *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/Restaurant'
+ *               $ref: '#/components/schemas/PaginatedRestaurants'
  */
 app.get('/unsecure/restaurants', allRestaurants)
 
@@ -1436,13 +1460,11 @@ app.get('/unsecure/restaurants/:id', findRestaurantById)
  *         description: Restaurant ID
  *     responses:
  *       200:
- *         description: List of visits for the restaurant
+ *         description: Paginated list of visits for the restaurant
  *         content:
  *           application/json:
  *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/Visit'
+ *               $ref: '#/components/schemas/PaginatedVisits'
  *       404:
  *         description: Restaurant not found
  *         content:
@@ -1533,6 +1555,7 @@ app.get('/unsecure/favorites/:id', findFavoriteListById)
  *             type: object
  *             required:
  *               - name
+ *               - owner
  *             properties:
  *               name:
  *                 type: string
@@ -1543,8 +1566,8 @@ app.get('/unsecure/favorites/:id', findFavoriteListById)
  *               restaurants:
  *                 type: array
  *                 items:
- *                   type: string
- *                 description: Array of restaurant IDs
+ *                   $ref: '#/components/schemas/RestaurantRef'
+ *                 description: Array of restaurant references
  *     responses:
  *       201:
  *         description: Favorite list created successfully
@@ -1587,8 +1610,8 @@ app.post('/unsecure/favorites', createFavoriteListUnsecure)
  *               restaurants:
  *                 type: array
  *                 items:
- *                   type: string
- *                 description: Array of restaurant IDs
+ *                   $ref: '#/components/schemas/RestaurantRef'
+ *                 description: Array of restaurant references
  *     responses:
  *       200:
  *         description: Favorite list updated successfully

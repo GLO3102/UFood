@@ -65,7 +65,7 @@ export const findUserById = async (req, res) => {
 export const follow = async (req, res) => {
   try {
     if (req.user.id === req.body.id) {
-      return res.status(404).send({
+      return res.status(400).send({
         errorCode: 'CANNOT_FOLLOW_USER',
         message: 'You cannot follow yourself'
       })

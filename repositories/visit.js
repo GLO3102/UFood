@@ -15,6 +15,7 @@ visitSchema.methods.toDTO = function () {
 
   const dto = {
     id: obj.id.toString(),
+    user_id: obj.user_id,
     restaurant_id: obj.restaurant_id,
     comment: obj.comment,
     rating: obj.rating,
