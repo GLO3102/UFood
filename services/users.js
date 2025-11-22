@@ -144,7 +144,7 @@ export const findIfFollowed = async (req, res) => {
       })
     }
 
-    res.status(200).send(user.toDTO(true, true))
+    res.status(200).send(req.user.toDTO(true, true))
   } catch (err) {
     res.status(500).send(err)
   }
